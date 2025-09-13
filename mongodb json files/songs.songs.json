@@ -1,0 +1,110 @@
+[{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbcc9"
+  },
+  "name": "God's Plan",
+  "artist": "Drake",
+  "album": "Scorpion",
+  "year": 2018,
+  "duration": "3:19",
+  "genre": "Hip-Hop"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbcca"
+  },
+  "name": "In My Feelings",
+  "artist": "Drake",
+  "album": "Scorpion",
+  "year": 2018,
+  "duration": "3:38",
+  "genre": "Hip-Hop"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbccb"
+  },
+  "name": "Hotline Bling",
+  "artist": "Drake",
+  "album": "Views",
+  "year": 2016,
+  "duration": "4:27",
+  "genre": "Hip-Hop"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbccc"
+  },
+  "name": "One Dance",
+  "artist": "Drake",
+  "album": "Views",
+  "year": 2016,
+  "duration": "2:54",
+  "genre": "Afrobeats / Pop"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbccd"
+  },
+  "name": "Started From the Bottom",
+  "artist": "Drake",
+  "album": "Nothing Was the Same",
+  "year": 2013,
+  "duration": "2:53",
+  "genre": "Hip-Hop"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbcce"
+  },
+  "name": "Take Care",
+  "artist": "Drake ft. Rihanna",
+  "album": "Take Care",
+  "year": 2011,
+  "duration": "4:37",
+  "genre": "Hip-Hop / R&B"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbccf"
+  },
+  "name": "Marvins Room",
+  "artist": "Drake",
+  "album": "Take Care",
+  "year": 2011,
+  "duration": "5:47",
+  "genre": "R&B"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbcd0"
+  },
+  "name": "Hold On, We're Going Home",
+  "artist": "Drake ft. Majid Jordan",
+  "album": "Nothing Was the Same",
+  "year": 2013,
+  "duration": "3:47",
+  "genre": "Pop / R&B"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbcd1"
+  },
+  "name": "Best I Ever Had",
+  "artist": "Drake",
+  "album": "So Far Gone",
+  "year": 2009,
+  "duration": "4:17",
+  "genre": "Hip-Hop / R&B"
+},
+{
+  "_id": {
+    "$oid": "68c587024d7cd1ee753fbcd2"
+  },
+  "name": "Look What You’ve Done",
+  "artist": "Drake",
+  "album": "Take Care",
+  "year": 2011,
+  "duration": "5:02",
+  "genre": "Hip-Hop"
+}]
