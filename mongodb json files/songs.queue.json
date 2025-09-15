@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "68c771ae41732648e7c67c5c"
+  },
+  "title": "In My Feelings",
+  "artist": "Drake",
+  "album": "Scorpion",
+  "release_date": "2018-07-10",
+  "genre": [
+    "Hip-Hop",
+    "Rap"
+  ],
+  "duration": 217,
+  "play_count": 0,
+  "vibe": [
+    "party",
+    "fun"
+  ]
+}]
