@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.searchcontroller">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" spacing="40.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onHome" text="HOME" />
+            <Button mnemonicParsing="false" onAction="#onSearch" text="SEARCH" />
+            <Button mnemonicParsing="false" onAction="#onLibrary" text="LIBRARY" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="32.0" prefWidth="600.0" spacing="25.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="PROFILE" />
+            <Button mnemonicParsing="false" text="SONGS" />
+            <Button mnemonicParsing="false" text="PODCASTS" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="558.0" prefWidth="564.0">
+               <children>
+                  <TextField layoutX="8.0" layoutY="14.0" prefHeight="26.0" prefWidth="546.0" />
+                  <VBox layoutX="8.0" layoutY="50.0" prefHeight="503.0" prefWidth="544.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

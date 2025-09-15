@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.playlistcontroller">
+   <bottom>
+      <VBox prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <!-- Media Player Bar -->
+            <HBox fx:id="mediaPlayerBar" alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #333;" visible="false">
+               <children>
+                  <Label fx:id="currentSongLabel" text="No song playing" prefWidth="200.0" style="-fx-text-fill: white;" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="previousButton" mnemonicParsing="false" text="⏮" onAction="#onPrevious" />
+                  <Button fx:id="playPauseButton" mnemonicParsing="false" text="▶" onAction="#onPlayPause" />
+                  <Button fx:id="nextButton" mnemonicParsing="false" text="⏭" onAction="#onNext" />
+                  <ProgressBar fx:id="progressBar" prefWidth="200.0" />
+                  <Label fx:id="durationLabel" text="0:00 / 0:00" prefWidth="100.0" style="-fx-text-fill: white;" />
+                  <Button fx:id="viewQueueButton" mnemonicParsing="false" text="Queue" onAction="#onViewQueue" />
+               </children>
+            </HBox>
+            <!-- Navigation Bar -->
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="900.0" spacing="60.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onHome" text="HOME" />
+                  <Button mnemonicParsing="false" onAction="#onSearch" text="SEARCH" />
+                  <Button mnemonicParsing="false" onAction="#onLibrary" text="LIBRARY" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="48.0" prefWidth="900.0" spacing="37.5" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="topPlaylistNameLabel" text="Playlist Name" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane prefHeight="300.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="837.0" prefWidth="846.0">
+               <children>
+                  <VBox fx:id="songsVBox" layoutX="15.0" layoutY="252.0" prefHeight="754.5" prefWidth="816.0" />
+                  <Label fx:id="playlistNameLabel" layoutX="378.0" layoutY="162.0" text="playlist name" />
+                  <ImageView id="playlistcover" fitHeight="144.0" fitWidth="192.0" layoutX="358.5" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/vector-picture-icon.jpg" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="21.0" layoutY="18.0" mnemonicParsing="false" onAction="#onBack" text="back" />
+                  <HBox layoutX="15.0" layoutY="192.0" prefHeight="45.0" prefWidth="712.5" spacing="45.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="shuffle" />
+                     </children>
+                  </HBox>
+                  <ComboBox fx:id="sortComboBox" layoutX="690.0" layoutY="193.5" prefWidth="150.0" promptText="Sort By">
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Title" />
+                              <String fx:value="Artist" />
+                          </FXCollections>
+                      </items>
+                  </ComboBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

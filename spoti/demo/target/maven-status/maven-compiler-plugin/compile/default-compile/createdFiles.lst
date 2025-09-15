@@ -1,0 +1,7 @@
+com\example\controllers\searchcontroller.class
+com\example\controllers\librarycontroller.class
+com\example\controllers\homecontroller.class
+com\example\MongoService.class
+com\example\App.class
+com\example\controllers\queuecontroller.class
+com\example\controllers\playlistcontroller.class

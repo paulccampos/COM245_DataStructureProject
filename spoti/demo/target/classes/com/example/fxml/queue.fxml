@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.queuecontroller">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="900.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="currentSongLabel" text="Now Playing: ..." style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="880.0">
+               <children>
+                  <VBox fx:id="queueVBox" layoutX="10.0" layoutY="10.0" prefHeight="480.0" prefWidth="860.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="900.0" spacing="60.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onBack" text="Back" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
