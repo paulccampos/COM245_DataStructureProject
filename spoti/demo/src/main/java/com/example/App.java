@@ -1,5 +1,6 @@
 package com.example;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.example.controllers.playlistcontroller;
@@ -8,6 +9,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 /**
@@ -23,6 +26,8 @@ public class App extends Application {
     private static boolean isPlaying = false;
     private static java.util.List<Object> mediaPlayerControllers = new java.util.ArrayList<>();
     private static String currentPlaylistName;
+
+    private static MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -71,13 +76,7 @@ public class App extends Application {
         if (queue != null && !queue.isEmpty()) {
             org.bson.Document nextSong = queue.remove(0);
             mongoService.removeFromQueue(nextSong);
-            currentSong = nextSong;
-            isPlaying = true;
-            playbackStartTime = System.currentTimeMillis();
-            pausedTime = 0;
-            System.out.println("Next: " + currentSong.getString("title"));
-            // Update media player UI
-            com.example.handlers.MediaPlayerHandler.getInstance().updateMediaPlayer();
+            playSong(nextSong);
         }
     }
 
@@ -85,6 +84,7 @@ public class App extends Application {
         // For simplicity, replay current or implement history
         if (currentSong != null) {
             System.out.println("Previous: " + currentSong.getString("title"));
+            playSong(currentSong);
         }
     }
 
@@ -147,6 +147,13 @@ public class App extends Application {
         return 0;
     }
 
+    private static String formatTime(long millis) {
+        long totalSeconds = millis / 1000;
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%d:%02d", minutes, seconds);
+    }
+
     public static String getTotalDurationFormatted() {
         if (currentSong != null) {
             Object durationObj = currentSong.get("duration");
@@ -160,13 +167,6 @@ public class App extends Application {
         return "3:45"; // default duration
     }
 
-    private static String formatTime(long millis) {
-        long totalSeconds = millis / 1000;
-        long minutes = totalSeconds / 60;
-        long seconds = totalSeconds % 60;
-        return String.format("%d:%02d", minutes, seconds);
-    }
-
     public static void playSong(org.bson.Document song) {
         currentSong = song;
         isPlaying = true;
@@ -174,6 +174,22 @@ public class App extends Application {
         pausedTime = 0;
         System.out.println("Playing: " + song.getString("title") + " by " + song.getString("artist"));
         try {
+            // Stop previous mediaPlayer if playing
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+            }
+            // Load media from file path in song document
+            String filePath = song.getString("file");
+            if (filePath != null && !filePath.isEmpty()) {
+                try {
+                    Media media = new Media(new File(filePath).toURI().toString());
+                    mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.play();
+                } catch (Exception e) {
+                    System.err.println("Error loading media file: " + filePath + " - " + e.getMessage());
+                    // Continue without playing, or handle gracefully
+                }
+            }
             scene.setRoot(scene.getRoot());
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,6 +202,9 @@ public class App extends Application {
         isPlaying = false;
         pausedTime += System.currentTimeMillis() - playbackStartTime;
         System.out.println("Paused");
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
         // Update media player UI
         com.example.handlers.MediaPlayerHandler.getInstance().updateMediaPlayer();
     }
@@ -195,9 +214,16 @@ public class App extends Application {
             isPlaying = true;
             playbackStartTime = System.currentTimeMillis();
             System.out.println("Resumed: " + currentSong.getString("title"));
+            if (mediaPlayer != null) {
+                mediaPlayer.play();
+            }
             // Update media player UI
             com.example.handlers.MediaPlayerHandler.getInstance().updateMediaPlayer();
         }
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 
     public static void main(String[] args) {

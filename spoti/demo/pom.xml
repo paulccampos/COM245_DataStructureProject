@@ -26,6 +26,11 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>21.0.4</version>
+        </dependency>
 
         <!-- MongoDB Java Driver -->
         <dependency>
@@ -65,7 +70,7 @@
                     <!-- ✅ tell Maven which JavaFX modules to add -->
                     <options>
                         <option>--add-modules</option>
-                        <option>javafx.controls,javafx.fxml</option>
+                        <option>javafx.controls,javafx.fxml,javafx.media</option>
                     </options>
                 </configuration>
             </plugin>

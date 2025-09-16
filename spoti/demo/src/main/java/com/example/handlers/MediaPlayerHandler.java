@@ -7,6 +7,7 @@ import com.example.App;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -87,38 +88,43 @@ public class MediaPlayerHandler {
                 if (currentSongLabel != null) {
                     currentSongLabel.setText(App.getCurrentSong().getString("title") + " - " + App.getCurrentSong().getString("artist"));
                 }
-                if (durationLabel != null) {
-                    durationLabel.setText(App.getCurrentTimeFormatted() + " / " + App.getTotalDurationFormatted());
-                }
                 if (playPauseButton != null) {
                     playPauseButton.setText(App.isPlaying() ? "⏸" : "▶");
                 }
-                if (progressBar != null) {
-                    // Calculate progress based on current time
-                    if (App.isPlaying()) {
-                        long currentTime = System.currentTimeMillis() - songStartTime;
-                        double progress = (double) currentTime / songDurationMillis;
-                        progressBar.setProgress(Math.min(progress, 1.0));
-                    } else {
-                        progressBar.setProgress(0.0);
-                    }
+                if (progressBar != null && App.getMediaPlayer() != null) {
+                    // Bind progress bar to MediaPlayer's current time
+                    progressBar.progressProperty().bind(
+                        Bindings.createDoubleBinding(() ->
+                            App.getMediaPlayer().currentTimeProperty().get().toMillis() /
+                            App.getMediaPlayer().totalDurationProperty().get().toMillis(),
+                            App.getMediaPlayer().currentTimeProperty(),
+                            App.getMediaPlayer().totalDurationProperty()
+                        )
+                    );
+                }
+                if (durationLabel != null && App.getMediaPlayer() != null) {
+                    // Bind duration label to MediaPlayer's current time and total duration
+                    App.getMediaPlayer().currentTimeProperty().addListener((obs, oldTime, newTime) -> {
+                        if (durationLabel != null) {
+                            durationLabel.setText(formatTime((long) newTime.toMillis()) + " / " + formatTime((long) App.getMediaPlayer().totalDurationProperty().get().toMillis()));
+                        }
+                    });
+                    App.getMediaPlayer().totalDurationProperty().addListener((obs, oldDur, newDur) -> {
+                        if (durationLabel != null) {
+                            durationLabel.setText(formatTime((long) App.getMediaPlayer().currentTimeProperty().get().toMillis()) + " / " + formatTime((long) newDur.toMillis()));
+                        }
+                    });
                 }
 
-                // Start or stop timeline based on playing state
-                if (App.isPlaying()) {
-                    if (progressTimeline.getStatus() != Timeline.Status.RUNNING) {
-                        songStartTime = System.currentTimeMillis();
-                        // Get song duration in milliseconds
-                        String durationStr = App.getTotalDurationFormatted();
-                        songDurationMillis = parseDurationToMillis(durationStr);
-                        progressTimeline.play();
-                    }
-                } else {
-                    progressTimeline.pause();
-                }
+                // Stop timeline since we're using MediaPlayer properties
+                progressTimeline.pause();
             } else {
                 mediaPlayerBar.setVisible(false);
                 progressTimeline.pause();
+                if (progressBar != null) {
+                    progressBar.progressProperty().unbind();
+                    progressBar.setProgress(0.0);
+                }
             }
         }
 
@@ -179,5 +185,12 @@ public class MediaPlayerHandler {
 
     public void removeUpdateCallback(Runnable callback) {
         updateCallbacks.remove(callback);
+    }
+
+    private String formatTime(long millis) {
+        long totalSeconds = millis / 1000;
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%d:%02d", minutes, seconds);
     }
 }

@@ -1,0 +1,6 @@
+- [x] Add "file" field to songs.songs.json with assumed MP3 paths
+- [x] Modify App.java to integrate JavaFX MediaPlayer for real audio playback
+- [x] Update MediaPlayerHandler if needed for progress
+- [x] Test the playback functionality
+- [x] Fix file path to ../../mp3/TakeCare.mp3
+- [x] Add "file" field to all remaining songs in the JSON file

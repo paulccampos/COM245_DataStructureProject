@@ -11,7 +11,8 @@
   "vibe": [
     "romantic",
     "chill"
-  ]
+  ],
+  "file": "../../mp3/TakeCare.mp3"
 },
 {
   "_id": {
@@ -26,7 +27,8 @@
   "vibe": [
     "sad",
     "late night"
-  ]
+  ],
+  "file": "../../mp3/MarvinsRoom.mp3"
 },
 {
   "_id": {
@@ -41,7 +43,8 @@
   "vibe": [
     "romantic",
     "chill"
-  ]
+  ],
+  "file": "../../mp3/HoldOnWereGoingHome.mp3"
 },
 {
   "_id": {
@@ -56,7 +59,8 @@
   "vibe": [
     "party",
     "motivational"
-  ]
+  ],
+  "file": "../../mp3/BestIEverHad.mp3"
 },
 {
   "_id": {
@@ -71,7 +75,8 @@
   "vibe": [
     "reflective",
     "chill"
-  ]
+  ],
+  "file": "../../mp3/LookWhatYouveDone.mp3"
 },
 {
   "_id": {
@@ -90,7 +95,8 @@
   "vibe": [
     "party",
     "motivational"
-  ]
+  ],
+  "file": "../../mp3/GodsPlan.mp3"
 },
 {
   "_id": {
@@ -109,7 +115,8 @@
   "vibe": [
     "party",
     "fun"
-  ]
+  ],
+  "file": "../../mp3/InMyFeelings.mp3"
 },
 {
   "_id": {
@@ -128,7 +135,8 @@
   "vibe": [
     "chill",
     "dance"
-  ]
+  ],
+  "file": "../../mp3/OneDance.mp3"
 },
 {
   "_id": {
@@ -147,7 +155,8 @@
   "vibe": [
     "party",
     "energetic"
-  ]
+  ],
+  "file": "../../mp3/Nonstop.mp3"
 },
 {
   "_id": {
@@ -166,7 +175,8 @@
   "vibe": [
     "motivational",
     "energetic"
-  ]
+  ],
+  "file": "../../mp3/StartedFromTheBottom.mp3"
 },
 {
   "_id": {
@@ -185,7 +195,8 @@
   "vibe": [
     "sad",
     "emotional"
-  ]
+  ],
+  "file": "../../mp3/Multo.mp3"
 },
 {
   "_id": {
@@ -204,7 +215,8 @@
   "vibe": [
     "sad",
     "melancholy"
-  ]
+  ],
+  "file": "../../mp3/SaksiAngLangit.mp3"
 },
 {
   "_id": {
@@ -223,7 +235,8 @@
   "vibe": [
     "chill",
     "relaxed"
-  ]
+  ],
+  "file": "../../mp3/Tensionado.mp3"
 },
 {
   "_id": {
@@ -242,7 +255,8 @@
   "vibe": [
     "romantic",
     "happy"
-  ]
+  ],
+  "file": "../../mp3/Tingin.mp3"
 },
 {
   "_id": {
@@ -261,7 +275,8 @@
   "vibe": [
     "happy",
     "cheerful"
-  ]
+  ],
+  "file": "../../mp3/KahelNaLangit.mp3"
 },
 {
   "_id": {
@@ -280,7 +295,8 @@
   "vibe": [
     "party",
     "energetic"
-  ]
+  ],
+  "file": "../../mp3/PinkVenom.mp3"
 },
 {
   "_id": {
@@ -299,7 +315,8 @@
   "vibe": [
     "chill",
     "cute"
-  ]
+  ],
+  "file": "../../mp3/Ditto.mp3"
 },
 {
   "_id": {
@@ -318,7 +335,8 @@
   "vibe": [
     "happy",
     "uplifting"
-  ]
+  ],
+  "file": "../../mp3/TakeTwo.mp3"
 },
 {
   "_id": {
@@ -337,7 +355,8 @@
   "vibe": [
     "chill",
     "groovy"
-  ]
+  ],
+  "file": "../../mp3/FeelMyRhythm.mp3"
 },
 {
   "_id": {
@@ -356,5 +375,6 @@
   "vibe": [
     "party",
     "energetic"
-  ]
+  ],
+  "file": "../../mp3/Antifreeze.mp3"
 }]
