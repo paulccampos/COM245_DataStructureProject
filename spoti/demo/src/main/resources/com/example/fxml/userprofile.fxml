@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.ProfileController" styleClass="root">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="900.0" spacing="60.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onHome" text="HOME" />
+            <Button mnemonicParsing="false" onAction="#onSearch" text="SEARCH" />
+            <Button mnemonicParsing="false" onAction="#onLibrary" text="LIBRARY" />
+            <Button mnemonicParsing="false" onAction="#onLogout" text="LOGOUT" style="-fx-background-color: #ff6b6b; -fx-text-fill: white;" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="48.0" prefWidth="900.0" spacing="37.5" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onProfile" text="PROFILE" />
+            <Button mnemonicParsing="false" onAction="#onSongs" text="SONGS" />
+            <Button mnemonicParsing="false" onAction="#onPodcasts" text="PODCASTS" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="false" BorderPane.alignment="CENTER" styleClass="scroll-pane">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20;">
+               <children>
+                  <Label text="👤 User Profile" style="-fx-font-size: 24px; -fx-font-weight: bold;" textAlignment="CENTER" />
+                  <Label text="Manage your account and preferences" style="-fx-font-size: 16px; -fx-text-fill: #666;" textAlignment="CENTER" />
+                  <HBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <ImageView fx:id="profileImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label fx:id="usernameLabel" text="Username" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                              <Label fx:id="emailLabel" text="email@example.com" style="-fx-font-size: 14px; -fx-text-fill: #ccc;" />
+                              <Label fx:id="statusLabel" text="Status" style="-fx-font-size: 14px; -fx-text-fill: #ccc;" />
+                              <Label fx:id="memberSinceLabel" text="Member since" style="-fx-font-size: 14px; -fx-text-fill: #ccc;" />
+                              <Label fx:id="lastUpdatedLabel" text="Last updated" style="-fx-font-size: 14px; -fx-text-fill: #ccc;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox spacing="15.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label text="Current Password:" prefWidth="120.0" style="-fx-text-fill: white;" />
+                              <PasswordField fx:id="currentPasswordField" prefHeight="25.0" prefWidth="200.0" promptText="Enter current password" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label text="New Password:" prefWidth="120.0" style="-fx-text-fill: white;" />
+                              <PasswordField fx:id="newPasswordField" prefHeight="25.0" prefWidth="200.0" promptText="Enter new password" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label text="Confirm Password:" prefWidth="120.0" style="-fx-text-fill: white;" />
+                              <PasswordField fx:id="confirmPasswordField" prefHeight="25.0" prefWidth="200.0" promptText="Confirm new password" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                           <children>
+                              <Button text="Update Password" onAction="#onChangePassword" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox spacing="20.0" style="-fx-padding: 20;">
+                     <children>
+                        <VBox prefHeight="150.0" prefWidth="700.0" spacing="15.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 10; -fx-padding: 20;">
+                           <children>
+                              <Label text="Top Music Preferences" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                              <VBox spacing="8.0">
+                                 <children>
+                                    <Label fx:id="genre1Label" text="1. Loading..." style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                                    <Label fx:id="genre2Label" text="2. Loading..." style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                                    <Label fx:id="genre3Label" text="3. Loading..." style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
