@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Profile - john doe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(180deg, #0b52bf 14%, #094197 25%, #073274 61%, #052659 86%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 110px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Profile Section */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-info h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            font-size: 16px;
+            opacity: 0.85;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #93c5fd 0%, transparent 100%);
+            border-radius: 2px;
+        }
+
+        /* Top Artists */
+        .top-artists {
+            margin-bottom: 60px;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 30px;
+        }
+
+        .artist-card {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .artist-card:hover .artist-image {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .artist-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .artist-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .artist-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Top Tracks */
+        .top-tracks {
+            margin-bottom: 60px;
+        }
+
+        .tracks-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tracks-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.8;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tracks-table td {
+            padding: 16px;
+            font-size: 16px;
+        }
+
+        .tracks-table tbody tr {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tracks-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+
+        .tracks-table tbody tr.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 3px solid white;
+        }
+
+        .track-number {
+            width: 50px;
+            opacity: 0.8;
+        }
+
+        /* Playlists */
+        .playlists-section {
+            margin-bottom: 40px;
+        }
+
+        .playlists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .playlist-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .playlist-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .playlist-card:hover .playlist-cover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .playlist-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .playlist-card:nth-child(3) .playlist-cover {
+            background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+        }
+
+        .playlist-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .playlist-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Player Bar */
+        .now-playing-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background-color: #1c1c60;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-top: 4px solid #3660a8;
+            z-index: 200;
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-basis: 30%;
+            flex-shrink: 0;
+        }
+
+        .song-cover-placeholder {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .song-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #cbd9ed;
+        }
+
+        .song-artist {
+            color: #cbd9ed;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            opacity: 0.8;
+        }
+
+        .song-info .fa-star {
+            font-size: 1.2rem;
+            color: #cbd9ed;
+            transition: color 0.1s ease;
+            cursor: pointer;
+        }
+
+        .center-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-basis: 40%;
+            flex-grow: 1;
+            max-width: 720px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            color: #cbd9ed;
+        }
+
+        .player-controls i {
+            cursor: pointer;
+            transition: color 0.1s ease;
+        }
+
+        .player-controls i:hover {
+            color: white;
+        }
+
+        .player-controls .large-icon {
+            font-size: 2.2rem;
+            color: #cbd9ed;
+        }
+
+        .player-controls .large-icon:hover {
+            color: white;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            font-size: 0.8rem;
+            color: #cbd9ed;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #cbd9ed;
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #cbd9ed;
+            font-size: 1.1rem;
+            padding-right: 15px;
+            flex-shrink: 0;
+            flex-basis: 30%;
+            justify-content: flex-end;
+        }
+
+        .volume-controls i {
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.1s ease;
+        }
+
+        .volume-controls i:hover {
+            color: white;
+        }
+
+        #volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #cbd9ed 0%, #cbd9ed 50%, #404b56 50%, #404b56 100%);
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd9ed;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        #volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd9ed;
+            cursor: pointer;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-info h1 {
+                font-size: 36px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .artists-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .tracks-table {
+                font-size: 14px;
+            }
+
+            .tracks-table th,
+            .tracks-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button">
+            <span>‹</span>
+            <span>›</span>
+        </button>
+
+        <div class="profile-header">
+            <div class="profile-image"></div>
+            <div class="profile-info">
+                <h1>john doe</h1>
+                <p>Bio</p>
+            </div>
+        </div>
+
+        <section class="top-artists">
+            <h2>Top Artists</h2>
+            <div class="artists-grid">
+                <div class="artist-card">
+                    <div class="artist-image"></div>
+                    <div class="artist-name">Black Pink</div>
+                    <div class="artist-label">Artist</div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-image"></div>
+                    <div class="artist-name">Title/Band/Song</div>
+                    <div class="artist-label">Artist</div>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-image"></div>
+                    <div class="artist-name">Title/Band/Artist</div>
+                    <div class="artist-label">Artist</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="top-tracks">
+            <h2>Top Tracks</h2>
+            <table class="tracks-table">
+                <thead>
+                    <tr>
+                        <th class="track-number">#</th>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="track-number">1</td>
+                        <td>song</td>
+                        <td>name</td>
+                        <td>album</td>
+                        <td>00:00</td>
+                    </tr>
+                    <tr>
+                        <td class="track-number">2</td>
+                        <td>song</td>
+                        <td>name</td>
+                        <td>album</td>
+                        <td>00:00</td>
+                    </tr>
+                    <tr>
+                        <td class="track-number">3</td>
+                        <td>song</td>
+                        <td>name</td>
+                        <td>album</td>
+                        <td>00:00</td>
+                    </tr>
+                    <tr>
+                        <td class="track-number">4</td>
+                        <td>song</td>
+                        <td>name</td>
+                        <td>album</td>
+                        <td>00:00</td>
+                    </tr>
+                    <tr>
+                        <td class="track-number">5</td>
+                        <td>song</td>
+                        <td>name</td>
+                        <td>album</td>
+                        <td>00:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="playlists-section">
+            <h2>Playlists</h2>
+            <div class="playlists-grid">
+                <div class="playlist-card">
+                    <div class="playlist-cover"></div>
+                    <div class="playlist-title">English Hits</div>
+                    <div class="playlist-label">Playlist</div>
+                </div>
+                <div class="playlist-card">
+                    <div class="playlist-cover"></div>
+                    <div class="playlist-title">Title/Band/Artist</div>
+                    <div class="playlist-label">Playlist</div>
+                </div>
+                <div class="playlist-card">
+                    <div class="playlist-cover"></div>
+                    <div class="playlist-title">Title/Band/Artist</div>
+                    <div class="playlist-label">Playlist</div>
+                </div>
+                <div class="playlist-card">
+                    <div class="playlist-cover"></div>
+                    <div class="playlist-title">Title/Band/Artist</div>
+                    <div class="playlist-label">Playlist</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="now-playing-bar">
+        <div class="song-info">
+            <div class="song-cover-placeholder"></div>
+            <div class="song-details">
+                <span class="song-title">Song Title</span>
+                <span class="song-artist">abcd</span>
+            </div>
+            <i class="far fa-star" id="favoriteBtn"></i>
+        </div>
+
+        <div class="center-player">
+            <div class="player-controls">
+                <i class="fas fa-shuffle"></i>
+                <i class="fas fa-backward-step"></i>
+                <i class="fas fa-play-circle large-icon" id="playControl"></i>
+                <i class="fas fa-forward-step"></i>
+                <i class="fas fa-repeat"></i>
+            </div>
+
+            <div class="progress-bar-container">
+                <span id="current-time">00:00</span>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span id="duration">00:00</span>
+            </div>
+        </div>
+
+        <div class="volume-controls">
+            <i class="fas fa-list-ul"></i>
+            <i class="fas fa-volume-up" id="volume-icon"></i>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+            <i class="fas fa-expand"></i>
+        </div>
+    </div>
+
+    <script>
+        const playControl = document.getElementById('playControl');
+        let isPlaying = false;
+
+        playControl.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playControl.classList.remove('fa-play-circle');
+                playControl.classList.add('fa-pause-circle');
+            } else {
+                playControl.classList.remove('fa-pause-circle');
+                playControl.classList.add('fa-play-circle');
+            }
+        });
+
+        const trackRows = document.querySelectorAll('.tracks-table tbody tr');
+        trackRows.forEach(row => {
+            row.addEventListener('click', () => {
+                trackRows.forEach(r => r.classList.remove('active'));
+                row.classList.add('active');
+                
+                const title = row.cells[1].textContent;
+                const artist = row.cells[2].textContent;
+                
+                document.querySelector('.song-title').textContent = title;
+                document.querySelector('.song-artist').textContent = artist;
+                
+                isPlaying = true;
+                playControl.classList.remove('fa-play-circle');
+                playControl.classList.add('fa-pause-circle');
+            });
+        });
+
+        // Favorite button
+        const favoriteBtn = document.getElementById('favoriteBtn');
+        favoriteBtn.addEventListener('click', () => {
+            if (favoriteBtn.classList.contains('far')) {
+                favoriteBtn.classList.remove('far');
+                favoriteBtn.classList.add('fas');
+                favoriteBtn.style.color = 'white';
+            } else {
+                favoriteBtn.classList.remove('fas');
+                favoriteBtn.classList.add('far');
+                favoriteBtn.style.color = '';
+            }
+        });
+
+        // Progress bar interaction
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const percent = ((e.clientX - rect.left) / rect.width) * 100;
+            progressFill.style.width = percent + '%';
+        });
+
+
+        const volumeSlider = document.getElementById('volume-slider');
+        
+        function updateVolumeFill() {
+            const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+            volumeSlider.style.background = linear-gradient(to right, #cbd9ed 0%, #cbd9ed ${value}%, #404b56 ${value}%, #404b56 100%);
+        }
+        
+        updateVolumeFill();
+        
+        volumeSlider.addEventListener('input', () => {
+            updateVolumeFill();
+            
+            const volumeIcon = document.getElementById('volume-icon');
+            const volumeLevel = parseFloat(volumeSlider.value);
+            
+            volumeIcon.classList.remove('fa-volume-up', 'fa-volume-down', 'fa-volume-off');
+            
+            if (volumeLevel === 0) {
+                volumeIcon.classList.add('fa-volume-off');
+            } else if (volumeLevel < 0.5) {
+                volumeIcon.classList.add('fa-volume-down');
+            } else {
+                volumeIcon.classList.add('fa-volume-up');
+            }
+        });
+    </script>
+</body>
+</html>
