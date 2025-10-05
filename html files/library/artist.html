@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artists - Your Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #0A111F;
+            --side-nav-blue: #052659;
+            --text-color: #cbd9ed;
+            --light-text: #cbd9ed;
+            --accent-green: #cbd9ed;
+            --search-bg: #252577;
+            --hover-bg: #283750;
+            --header-bg: #152033;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(180deg, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 5px;
+            width: fit-content;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 12px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .filter-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clear-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .filter-tag {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 18px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .create-btn {
+            background: rgba(255, 255, 255, 0.85);
+            color: #1e40af;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .create-btn:hover {
+            background: white;
+        }
+
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            padding-left: 40px;
+            color: white;
+            width: 250px;
+            font-size: 14px;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .sort-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-sort {
+            display: flex;
+            gap: 10px;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            margin-bottom: 120px;
+        }
+
+        .library-item {
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-align: center;
+        }
+
+        .library-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-title {
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--text-color);
+        }
+
+        .item-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+
+        .now-playing-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background-color: var(--side-nav-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-top: 4px solid #4569AD;
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-basis: 30%; 
+            flex-shrink: 0;
+        }
+
+        .song-cover-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #404b56; 
+            flex-shrink: 0;
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        .song-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+        }
+
+        .song-artist {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-info .fa-star {
+            font-size: 1.2rem;
+            color: var(--light-text); 
+            transition: color 0.1s ease;
+            cursor: pointer;
+        }
+
+        .center-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-basis: 40%; 
+            flex-grow: 1;
+            max-width: 720px; 
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        .player-controls i {
+            cursor: pointer;
+            transition: color 0.1s ease;
+        }
+
+        .player-controls i:hover {
+            color: var(--text-color);
+        }
+
+        .player-controls .large-icon {
+            font-size: 2.2rem;
+            color: var(--text-color);
+        }
+
+        .player-controls .large-icon:hover {
+            color: var(--accent-green);
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%; 
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #eae7ee; 
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: width 0.1s linear; 
+        }
+
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+            color: #ffffff; 
+            font-size: 1.1rem;
+            padding-right: 15px;
+            flex-shrink: 0;
+            flex-basis: 30%; 
+            justify-content: flex-end; 
+        }
+
+        .volume-controls i {
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.1s ease;
+        }
+
+        .volume-controls i:hover {
+            color: var(--text-color);
+        }
+
+        #volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px; 
+            height: 4px;
+            background: #404b56; 
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px; 
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-color); 
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        #volume-slider::-moz-range-thumb {
+            width: 12px; 
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-color); 
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="nav-buttons">
+                <button class="nav-btn">‹</button>
+                <button class="nav-btn">›</button>
+            </div>
+            <h1>Your Library</h1>
+        </div>
+        <button class="create-btn">
+            <span style="font-size: 20px;">+</span> Create
+        </button>
+    </div>
+
+    <div class="controls">
+        <div class="filter-section">
+            <button class="clear-btn">×</button>
+            <span class="filter-tag">Artists</span>
+        </div>
+        <div class="search-sort">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-box" placeholder="Search in your library">
+            </div>
+            <button class="sort-btn">
+                Sort by 
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="library-grid">
+        <div class="library-item">
+            <div class="item-cover" style="background: #d4d4d4;"></div>
+            <div class="item-title">Black Pink</div>
+            <div class="item-subtitle">Artist</div>
+        </div>
+        <div class="library-item">
+            <div class="item-cover" style="background: #d4d4d4;"></div>
+            <div class="item-title">Title/Band/Song</div>
+            <div class="item-subtitle">Artist</div>
+        </div>
+        <div class="library-item">
+            <div class="item-cover" style="background: #d4d4d4;"></div>
+            <div class="item-title">Title/Band/Artist</div>
+            <div class="item-subtitle">Artist</div>
+        </div>
+    </div>
+
+    <div class="now-playing-bar">
+        <div class="song-info">
+            <audio id="music-player" src="Coldplay - Viva la Vida.mp3" preload="auto"></audio> 
+            <div class="song-cover-placeholder"></div>
+            <div class="song-details">
+                <span class="song-title">Viva la Vida</span>
+                <span class="song-artist">Coldplay</span>
+            </div>
+            <i class="far fa-star"></i>
+        </div>
+        <div class="center-player"> 
+            <div class="player-controls">
+                <i class="fas fa-shuffle"></i>
+                <i class="fas fa-backward-step"></i>
+                <i class="fas fa-play-circle large-icon" id="play-pause-btn-home"></i> 
+                <i class="fas fa-forward-step"></i>
+                <i class="fas fa-repeat"></i>
+            </div>
+
+            <div class="progress-bar-container">
+                <span id="current-time">00:00</span>
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="duration">00:00</span>
+            </div>
+        </div>
+
+        <div class="volume-controls">
+            <i class="fas fa-list-ul"></i>
+            <i class="fas fa-volume-up" id="volume-icon"></i> 
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+            <i class="fas fa-expand"></i>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.querySelector('.search-box');
+        const playPauseBtnHome = document.getElementById('play-pause-btn-home');
+        const musicPlayer = document.getElementById('music-player');
+
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration'); 
+        
+        const progressBarEl = document.getElementById('progress-bar'); 
+        const progressFill = document.getElementById('progress-fill');
+
+        const volumeIcon = document.getElementById('volume-icon');
+        const volumeSlider = document.getElementById('volume-slider');
+
+        const favoriteStar = document.querySelector('.song-info .fa-star');
+
+        let isPlayingHome = false;
+
+        function formatTime(seconds) {
+            if (isNaN(seconds) || seconds < 0) return '00:00'; 
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            const minutes = String(min).padStart(2, '0');
+            const secondsFormatted = String(sec).padStart(2, '0');
+            return `${minutes}:${secondsFormatted}`;
+        }
+
+        if (favoriteStar) {
+            favoriteStar.style.cursor = 'pointer';
+
+            favoriteStar.addEventListener('click', () => {
+                if (favoriteStar.classList.contains('far')) {
+                    favoriteStar.classList.remove('far');
+                    favoriteStar.classList.add('fas');
+                    favoriteStar.style.color = 'white';
+                } else {
+                    favoriteStar.classList.remove('fas');
+                    favoriteStar.classList.add('far');
+                    favoriteStar.style.color = '';
+                }
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        alert(`Searching for: ${query}`);
+                        searchInput.value = '';
+                    }
+                }
+            });
+        }
+
+        function togglePlayPauseHome() {
+            if (isPlayingHome) {
+                musicPlayer.pause();
+                playPauseBtnHome.classList.remove('fa-pause-circle');
+                playPauseBtnHome.classList.add('fa-play-circle');
+            } else {
+                musicPlayer.play();
+                playPauseBtnHome.classList.remove('fa-play-circle');
+                playPauseBtnHome.classList.add('fa-pause-circle');
+            }
+            isPlayingHome = !isPlayingHome;
+        }
+
+        if (playPauseBtnHome) {
+            playPauseBtnHome.addEventListener('click', togglePlayPauseHome);
+        }
+        
+        const TARGET_DURATION = 242; 
+
+        musicPlayer.addEventListener('loadedmetadata', () => {
+            const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                             ? musicPlayer.duration 
+                             : TARGET_DURATION;
+                             
+            durationEl.textContent = formatTime(duration);
+        });
+
+        musicPlayer.addEventListener('timeupdate', () => {
+            const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                             ? musicPlayer.duration 
+                             : TARGET_DURATION;
+            const { currentTime } = musicPlayer;
+            
+            currentTimeEl.textContent = formatTime(currentTime);
+
+            const remainingTime = duration - currentTime;
+            
+            durationEl.textContent = formatTime(remainingTime); 
+
+            if (!isNaN(duration)) {
+                const progressPercent = (currentTime / duration) * 100;
+                progressFill.style.width = `${progressPercent}%`;
+            }
+        });
+
+        musicPlayer.addEventListener('ended', () => {
+            isPlayingHome = false;
+            playPauseBtnHome.classList.remove('fa-pause-circle');
+            playPauseBtnHome.classList.add('fa-play-circle');
+            progressFill.style.width = '0%';
+            currentTimeEl.textContent = '00:00'; 
+            
+            const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                             ? musicPlayer.duration 
+                             : TARGET_DURATION;
+            durationEl.textContent = formatTime(duration);
+        });
+        
+        if (progressBarEl) {
+            progressBarEl.addEventListener('click', (e) => {
+                const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                                 ? musicPlayer.duration 
+                                 : TARGET_DURATION;
+                const width = progressBarEl.clientWidth;
+                const clickX = e.offsetX;
+                
+                if (!isNaN(duration)) {
+                    musicPlayer.currentTime = (clickX / width) * duration;
+                }
+            });
+        }
+
+        if (musicPlayer && volumeSlider && volumeIcon) {
+            
+            function updateVolumeFill() {
+                const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+                volumeSlider.style.background = `linear-gradient(to right, var(--text-color) 0%, var(--text-color) ${value}%, #404b56 ${value}%, #404b56 100%)`;
+            }
+            
+            musicPlayer.volume = volumeSlider.value;
+            updateVolumeFill();
+
+            volumeSlider.addEventListener('input', () => {
+                const volumeLevel = parseFloat(volumeSlider.value);
+                musicPlayer.volume = volumeLevel;
+                
+                updateVolumeFill(); 
+                
+                volumeIcon.classList.remove('fa-volume-up', 'fa-volume-down', 'fa-volume-off');
+                
+                if (volumeLevel === 0) {
+                    volumeIcon.classList.add('fa-volume-off');
+                } else if (volumeLevel < 0.5) {
+                    volumeIcon.classList.add('fa-volume-down');
+                } else {
+                    volumeIcon.classList.add('fa-volume-up');
+                }
+            });
+        }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navButtons = document.querySelectorAll(".nav-btn");
+  const clearBtn = document.querySelector(".clear-btn");    
+
+  const backBtn = navButtons[0]; // ‹
+  const nextBtn = navButtons[1]; // ›
+
+  const currentPage = window.location.pathname.split("/").pop();
+
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "library.html";
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      window.location.href = "library.html";
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      if (currentPage === "playlistsInslib.html") {
+        window.location.href = "artist.html";
+      } else if (currentPage === "artist.html") {
+        window.location.href = "favorites.html";
+      } else if (currentPage === "favorites.html") {
+
+        window.location.href = "library.html";
+      }
+    });
+  }
+});
+
+
+    </script>
+</body>
+</html>

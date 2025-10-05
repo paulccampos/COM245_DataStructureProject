@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #0A111F;
+            --side-nav-blue: #052659;
+            --text-color: #cbd9ed;
+            --light-text: #cbd9ed;
+            --accent-green: #cbd9ed;
+            --search-bg: #252577;
+            --hover-bg: #283750;
+            --header-bg: #152033;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(180deg, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 5px;
+            width: fit-content;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 12px;
+            font-size: 20px;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.8;
+        }
+
+        a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-item {
+  display: inline-block;
+  font-size: 16px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  opacity: 0.85;
+}
+
+.nav-item:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-item.active {
+  opacity: 1;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .create-btn {
+            background: rgba(255, 255, 255, 0.85);
+            color: #1e40af;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .create-btn:hover {
+            background: white;
+        }
+
+        .playlist-header {
+            display: flex;
+            gap: 30px;
+            align-items: flex-end;
+            margin-bottom: 30px;
+            margin-left: 60px;
+        }
+
+        .playlist-cover {
+            width: 180px;
+            height: 180px;
+            background: #d4d4d4;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .playlist-info h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .playlist-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 28px;
+        }
+
+        .user-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .left-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .play-main {
+            background: white;
+            color: #1e40af;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-main:hover {
+            transform: scale(1.05);
+        }
+
+        .secondary-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .right-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            padding-left: 35px;
+            color: white;
+            font-size: 13px;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .sort-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort-wrapper {
+            position: relative;
+        }
+
+        .sort-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background: rgba(30, 41, 59, 0.98);
+            border-radius: 10px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+            min-width: 220px;
+            z-index: 1000;
+            padding: 10px 0;
+            animation: fadeIn 0.15s ease;
+        }
+
+        .sort-menu.show {
+            display: block;
+        }
+
+        .sort-section {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+        }
+
+        .sort-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .sort-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 6px 16px;
+        }
+
+        .sort-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            transition: background 0.15s ease;
+        }
+
+        .sort-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .songs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 120px;
+        }
+
+        .songs-table thead {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .songs-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .songs-table th:first-child {
+            width: 50px;
+            text-align: center;
+        }
+
+        .songs-table th:last-child {
+            width: 80px;
+        }
+
+        .songs-table tbody tr {
+            position: relative;
+        }
+
+        .songs-table td {
+            padding: 12px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .duration-cell {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .duration-cell .time-text {
+            flex-grow: 1;
+        }
+
+        .duration-cell .song-options {
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+        }
+
+        .options-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 4px 6px;
+        }
+
+        .options-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .songs-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .songs-table tbody tr:hover .song-options {
+            opacity: 1;
+        }
+
+        .songs-table td:first-child {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .song-options {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .options-menu {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 100%;
+            background: rgba(30, 41, 59, 0.98);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            min-width: 200px;
+            z-index: 1000;
+            padding: 8px 0;
+        }
+
+        .options-menu.show {
+            display: block;
+        }
+
+        .option-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: white;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .option-item.danger {
+            color: #ef4444;
+        }
+
+        .option-item.danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .now-playing-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background-color: var(--side-nav-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-top: 4px solid #4569AD;
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-basis: 30%; 
+            flex-shrink: 0;
+        }
+
+        .song-cover-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #404b56; 
+            flex-shrink: 0;
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        .song-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+        }
+
+        .song-artist {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-info .fa-star {
+            font-size: 1.2rem;
+            color: var(--light-text); 
+            transition: color 0.1s ease;
+            cursor: pointer;
+        }
+
+        .center-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-basis: 40%; 
+            flex-grow: 1;
+            max-width: 720px; 
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        .player-controls i {
+            cursor: pointer;
+            transition: color 0.1s ease;
+        }
+
+        .player-controls i:hover {
+            color: var(--text-color);
+        }
+
+        .player-controls .large-icon {
+            font-size: 2.2rem;
+            color: var(--text-color);
+        }
+
+        .player-controls .large-icon:hover {
+            color: var(--accent-green);
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%; 
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #eae7ee; 
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: width 0.1s linear; 
+        }
+
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+            color: #ffffff; 
+            font-size: 1.1rem;
+            padding-right: 15px;
+            flex-shrink: 0;
+            flex-basis: 30%; 
+            justify-content: flex-end; 
+        }
+
+        .volume-controls i {
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.1s ease;
+        }
+
+        .volume-controls i:hover {
+            color: var(--text-color);
+        }
+
+        #volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px; 
+            height: 4px;
+            background: #404b56; 
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px; 
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-color); 
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        #volume-slider::-moz-range-thumb {
+            width: 12px; 
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-color); 
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="nav-buttons">
+                <button class="nav-btn">‹</button>
+                <button class="nav-btn">›</button>
+            </div>
+        </div>
+        <button class="create-btn">
+            <span style="font-size: 20px;">+</span> Create
+        </button>
+    </div>
+
+    <div class="playlist-header">
+        <div class="playlist-cover"></div>
+        <div class="playlist-info">
+            <h2>FAVORITES</h2>
+            <div class="playlist-meta">
+                <svg class="user-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                <span>user • 123 songs</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls-bar">
+        <div class="left-controls">
+            <button class="play-main">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+            </button>
+            <button class="secondary-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 3 21 3 21 8"></polyline>
+                    <line x1="4" y1="20" x2="21" y2="3"></line>
+                    <polyline points="21 16 21 21 16 21"></polyline>
+                    <line x1="15" y1="15" x2="21" y2="21"></line>
+                    <line x1="4" y1="4" x2="9" y2="9"></line>
+                </svg>
+            </button>
+            <button class="secondary-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="right-controls">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-box" placeholder="Search">
+            </div>
+            <div class="sort-wrapper">
+                <button class="sort-btn" onclick="toggleSortMenu(event)">
+                    Sort by
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="sort-menu" id="sortMenu">
+                    <div class="sort-section">
+                        <p class="sort-label">Sort by</p>
+                        <div class="sort-item" onclick="setSort('title')">Title</div>
+                        <div class="sort-item" onclick="setSort('artist')">Artist</div>
+                        <div class="sort-item" onclick="setSort('album')">Album</div>
+                        <div class="sort-item" onclick="setSort('recent')">Recently Played</div>
+                    </div>
+                    <div class="sort-section">
+                        <p class="sort-label">View as</p>
+                        <div class="sort-item" onclick="setView('compact')">Compact List</div>
+                        <div class="sort-item" onclick="setView('default')">Default List</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="songs-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Sorting</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>01abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 1)">⋯</button>
+                        <div class="options-menu" id="options-1">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(1)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>12abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 2)">⋯</button>
+                        <div class="options-menu" id="options-2">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(2)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 3)">⋯</button>
+                        <div class="options-menu" id="options-3">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(3)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 4)">⋯</button>
+                        <div class="options-menu" id="options-4">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(4)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 5)">⋯</button>
+                        <div class="options-menu" id="options-5">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(5)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 6)">⋯</button>
+                        <div class="options-menu" id="options-6">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(6)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 7)">⋯</button>
+                        <div class="options-menu" id="options-7">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(7)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 8)">⋯</button>
+                        <div class="options-menu" id="options-8">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(8)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 9)">⋯</button>
+                        <div class="options-menu" id="options-9">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(9)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 10)">⋯</button>
+                        <div class="options-menu" id="options-10">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(10)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>song</td>
+                <td>name</td>
+                <td>name</td>
+                <td>123abc</td>
+                <td class="duration-cell">
+                    <span class="time-text">00:00</span>
+                    <span class="song-options">
+                        <button class="options-btn" onclick="toggleOptions(event, 11)">⋯</button>
+                        <div class="options-menu" id="options-11">
+                            <div class="option-item" onclick="addToQueue()">Add to queue</div>
+                            <div class="option-item" onclick="addToPlaylist()">Add to playlist</div>
+                            <div class="option-item danger" onclick="removeSong(11)">Remove from Favorites</div>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+     <div class="now-playing-bar">
+        <div class="song-info">
+             <audio id="music-player" src="Coldplay - Viva la Vida.mp3" preload="auto"></audio> 
+            <div class="song-cover-placeholder"></div>
+            <div class="song-details">
+                <span class="song-title">Viva la Vida</span>
+                <span class="song-artist">Coldplay</span>
+            </div>
+            <i class="far fa-star"></i>
+        </div>
+    <div class="center-player"> 
+        <div class="player-controls">
+            <i class="fas fa-shuffle"></i>
+            <i class="fas fa-backward-step"></i>
+            <i class="fas fa-play-circle large-icon" id="play-pause-btn-home"></i> 
+            <i class="fas fa-forward-step"></i>
+            <i class="fas fa-repeat"></i>
+        </div>
+
+        <div class="progress-bar-container">
+            <span id="current-time">00:00</span>
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span id="duration">00:00</span>
+        </div>
+    </div>
+
+    <div class="volume-controls">
+        <i class="fas fa-list-ul"></i>
+        <i class="fas fa-volume-up" id="volume-icon"></i> 
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        <i class="fas fa-expand"></i>
+    </div>
+</div>
+
+<script>
+    // Options menu functionality
+    function toggleOptions(event, songId) {
+        event.stopPropagation();
+        
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            if (menu.id !== `options-${songId}`) {
+                menu.classList.remove('show');
+            }
+        });
+        
+        const menu = document.getElementById(`options-${songId}`);
+        menu.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.options-btn')) {
+            document.querySelectorAll('.options-menu').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        }
+    });
+
+    function addToQueue() {
+        alert('Added to queue');
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+
+    function addToPlaylist() {
+        alert('Add to playlist dialog would open here');
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+
+    function removeSong(songId) {
+        if (confirm('Remove this song from Favorites?')) {
+            alert(`Song ${songId} removed from Favorites`);
+            document.querySelectorAll('.options-menu').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        }
+    }
+
+    // Sort menu functionality
+    function toggleSortMenu(event) {
+        event.stopPropagation();
+        const menu = document.getElementById('sortMenu');
+        menu.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function (event) {
+        const sortMenu = document.getElementById('sortMenu');
+        if (!event.target.closest('.sort-wrapper')) {
+            sortMenu.classList.remove('show');
+        }
+    });
+
+    function setSort(type) {
+        alert('Sorting by: ' + type);
+        document.getElementById('sortMenu').classList.remove('show');
+    }
+
+    function setView(viewType) {
+        alert('View changed to: ' + viewType);
+        document.getElementById('sortMenu').classList.remove('show');
+    }
+
+    // Music player functionality
+    const searchInput = document.querySelector('.search-box');
+    const playPauseBtnHome = document.getElementById('play-pause-btn-home');
+    const musicPlayer = document.getElementById('music-player');
+
+    const currentTimeEl = document.getElementById('current-time');
+    const durationEl = document.getElementById('duration'); 
+    
+    const progressBarEl = document.getElementById('progress-bar'); 
+    const progressFill = document.getElementById('progress-fill');
+
+    const volumeIcon = document.getElementById('volume-icon');
+    const volumeSlider = document.getElementById('volume-slider');
+
+    const favoriteStar = document.querySelector('.song-info .fa-star');
+
+    let isPlayingHome = false;
+
+    function formatTime(seconds) {
+        if (isNaN(seconds) || seconds < 0) return '00:00'; 
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        const minutes = String(min).padStart(2, '0');
+        const secondsFormatted = String(sec).padStart(2, '0');
+        return `${minutes}:${secondsFormatted}`;
+    }
+
+    if (favoriteStar) {
+        favoriteStar.style.cursor = 'pointer';
+
+        favoriteStar.addEventListener('click', () => {
+            if (favoriteStar.classList.contains('far')) {
+                favoriteStar.classList.remove('far');
+                favoriteStar.classList.add('fas');
+                favoriteStar.style.color = 'white';
+            } else {
+                favoriteStar.classList.remove('fas');
+                favoriteStar.classList.add('far');
+                favoriteStar.style.color = '';
+            }
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    alert(`Searching for: ${query}`);
+                    searchInput.value = '';
+                }
+            }
+        });
+    }
+
+    function togglePlayPauseHome() {
+        if (isPlayingHome) {
+            musicPlayer.pause();
+            playPauseBtnHome.classList.remove('fa-pause-circle');
+            playPauseBtnHome.classList.add('fa-play-circle');
+        } else {
+            musicPlayer.play();
+            playPauseBtnHome.classList.remove('fa-play-circle');
+            playPauseBtnHome.classList.add('fa-pause-circle');
+        }
+        isPlayingHome = !isPlayingHome;
+    }
+
+    if (playPauseBtnHome) {
+        playPauseBtnHome.addEventListener('click', togglePlayPauseHome);
+    }
+    
+    const TARGET_DURATION = 242; 
+
+    musicPlayer.addEventListener('loadedmetadata', () => {
+        const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                         ? musicPlayer.duration 
+                         : TARGET_DURATION;
+                         
+        durationEl.textContent = formatTime(duration);
+    });
+
+    musicPlayer.addEventListener('timeupdate', () => {
+        const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                         ? musicPlayer.duration 
+                         : TARGET_DURATION;
+        const { currentTime } = musicPlayer;
+        
+        currentTimeEl.textContent = formatTime(currentTime);
+
+        const remainingTime = duration - currentTime;
+        
+        durationEl.textContent = formatTime(remainingTime); 
+
+        if (!isNaN(duration)) {
+            const progressPercent = (currentTime / duration) * 100;
+            progressFill.style.width = `${progressPercent}%`;
+        }
+    });
+
+    musicPlayer.addEventListener('ended', () => {
+        isPlayingHome = false;
+        playPauseBtnHome.classList.remove('fa-pause-circle');
+        playPauseBtnHome.classList.add('fa-play-circle');
+        progressFill.style.width = '0%';
+        currentTimeEl.textContent = '00:00'; 
+        
+        const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                         ? musicPlayer.duration 
+                         : TARGET_DURATION;
+        durationEl.textContent = formatTime(duration);
+    });
+    
+    if (progressBarEl) {
+        progressBarEl.addEventListener('click', (e) => {
+            const duration = !isNaN(musicPlayer.duration) && musicPlayer.duration > 0 
+                             ? musicPlayer.duration 
+                             : TARGET_DURATION;
+            const width = progressBarEl.clientWidth;
+            const clickX = e.offsetX;
+            
+            if (!isNaN(duration)) {
+                musicPlayer.currentTime = (clickX / width) * duration;
+            }
+        });
+    }
+
+    if (musicPlayer && volumeSlider && volumeIcon) {
+        
+        function updateVolumeFill() {
+            const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+            volumeSlider.style.background = `linear-gradient(to right, var(--text-color) 0%, var(--text-color) ${value}%, #404b56 ${value}%, #404b56 100%)`;
+        }
+        
+        musicPlayer.volume = volumeSlider.value;
+        updateVolumeFill();
+
+        volumeSlider.addEventListener('input', () => {
+            const volumeLevel = parseFloat(volumeSlider.value);
+            musicPlayer.volume = volumeLevel;
+            
+            updateVolumeFill(); 
+            
+            volumeIcon.classList.remove('fa-volume-up', 'fa-volume-down', 'fa-volume-off');
+            
+            if (volumeLevel === 0) {
+                volumeIcon.classList.add('fa-volume-off');
+            } else if (volumeLevel < 0.5) {
+                volumeIcon.classList.add('fa-volume-down');
+            } else {
+                volumeIcon.classList.add('fa-volume-up');
+            }
+        });
+    }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navButtons = document.querySelectorAll(".nav-btn");
+  const clearBtn = document.querySelector(".clear-btn"); 
+
+  const backBtn = navButtons[0]; // ‹
+  const nextBtn = navButtons[1]; // ›
+
+  const currentPage = window.location.pathname.split("/").pop();
+
+ 
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "library.html";
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      window.location.href = "library.html";
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      if (currentPage === "playlistsInslib.html") {
+        window.location.href = "artist.html";
+      } else if (currentPage === "artist.html") {
+        window.location.href = "favorites.html";
+      } else if (currentPage === "favorites.html") {
+  
+        window.location.href = "library.html";
+      }
+    });
+  }
+});
+
+
+</script>
+</body>
+</html>
