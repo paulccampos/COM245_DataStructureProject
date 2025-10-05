@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Hits - Spawtify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #0A111F;
+            --side-nav-blue: #052659;
+            --text-color: #cbd9ed;
+            --light-text: #cbd9ed;
+            --accent-green: #cbd9ed;
+            --search-bg: #252577;
+            --header-bg: #152033;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #0b52bf 29%, #094197 38%, #073274 61%, #052659 86%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.1s ease;
+        }
+
+        a:hover {
+            color: var(--text-color) !important;
+        }
+
+        .app-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: var(--side-nav-blue);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 4px solid #3660a8;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            background-color: var(--search-bg);
+            padding: 10px 15px;
+            border-radius: 4px;
+            color: var(--light-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .search-box input {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            outline: none;
+            padding: 0;
+            font-size: 1rem;
+        }
+
+        .search-box input::placeholder {
+            color: var(--light-text);
+        }
+
+        .main-nav a {
+            color: var(--light-text);
+            font-weight: bold;
+            padding: 8px 0;
+            position: relative;
+            display: block;
+            margin-left: 0.3cm;
+        }
+
+        .main-nav a:hover {
+            color: var(--text-color) !important;
+        }
+
+        .main-nav a.active {
+            color: var(--text-color);
+        }
+
+        .main-nav a i {
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        .playlists {
+            flex-grow: 1;
+            margin-top: -2px;
+            padding-top: 10px;
+        }
+
+        .playlists ul:first-of-type {
+            border-bottom: 2px solid #3660a8;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .playlists-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            color: var(--text-color);
+            font-weight: bold;
+            margin: 10px 0;
+            cursor: pointer;
+            padding-right: 10px;
+            gap: 15px;
+            font-size: 1.2rem;
+        }
+
+        .playlists-header .fa-plus-circle {
+            background-color: #3660a8;
+            color: var(--text-color);
+            border-radius: 50%;
+            padding: 4px;
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .playlists ul {
+            list-style: none;
+            margin-left: 0.5cm;
+        }
+
+        .playlists ul li a {
+            padding: 5px 0;
+        }
+
+        .section-title {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 20px 0 5px 0;
+            font-weight: bold;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 0px 20px 120px 20px;
+            overflow-y: scroll;
+            height: calc(100vh - 90px);
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 5px;
+            transition: background 0.2s ease;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .main-section {
+            width: 100%;
+            padding: 24px 48px;
+            padding-bottom: 120px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 5px;
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 12px;
+            font-size: 20px;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.8;
+        }
+
+        .create-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1e3a8a;
+            padding: 12px 32px;
+            border-radius: 24px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            float: right;
+            margin-top: -40px;
+        }
+
+        .create-btn:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .playlist-header {
+            padding: 40px 0;
+            margin-bottom: 28px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .playlist-cover {
+            width: 220px;
+            height: 220px;
+            background: #93c5fd;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .playlist-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .playlist-name {
+            font-size: 4rem;
+            margin: 0;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .playlist-description {
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .playlist-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .play-btn {
+            background-color: var(--accent-green);
+            color: var(--dark-blue);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .shuffle-btn {
+            background: none;
+            color: var(--text-color);
+            border: 1px solid var(--light-text);
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .shuffle-btn:hover {
+            border-color: var(--text-color);
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .search-sort {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            padding-left: 40px;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .sort-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tracks-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tracks-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tracks-table td {
+            padding: 16px;
+            font-size: 16px;
+        }
+
+        .tracks-table tbody tr {
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .tracks-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .track-number {
+            width: 50px;
+            opacity: 0.8;
+        }
+
+        .duration-cell {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .duration-cell .time-text {
+            flex-grow: 1;
+        }
+
+        .duration-cell .song-options {
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .tracks-table tbody tr:hover .song-options {
+            opacity: 1;
+        }
+
+        .options-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 4px 6px;
+        }
+
+        .options-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .now-playing-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background-color: var(--side-nav-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-top: 4px solid #3660a8;
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-basis: 30%;
+            flex-shrink: 0;
+        }
+
+        .song-cover-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #404b56;
+            flex-shrink: 0;
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .song-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+        }
+
+        .song-artist {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-info .fa-star {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            transition: color 0.1s ease;
+            cursor: pointer;
+        }
+
+        .center-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-basis: 40%;
+            flex-grow: 1;
+            max-width: 720px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        .player-controls i {
+            cursor: pointer;
+            transition: color 0.1s ease;
+        }
+
+        .player-controls i:hover {
+            color: var(--text-color);
+        }
+
+        .player-controls .large-icon {
+            font-size: 2.2rem;
+            color: var(--text-color);
+        }
+
+        .player-controls .large-icon:hover {
+            color: var(--accent-green);
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #cbd9ed;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #ffffff;
+            font-size: 1.1rem;
+            padding-right: 15px;
+            flex-shrink: 0;
+            flex-basis: 30%;
+            justify-content: flex-end;
+        }
+
+        .volume-controls i {
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.1s ease;
+        }
+
+        .volume-controls i:hover {
+            color: var(--text-color);
+        }
+
+        #volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 4px;
+            background: #404b56;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-color);
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        #volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-color);
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <h1 class="logo">SPAWITFY</h1>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="sidebar-search" placeholder="Search Spawtify...">
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="active"> Home</a>
+                <a href="#"> Your Library</a>
+            </nav>
+
+            <div class="playlists">
+                <div class="playlists-header">
+                    <span>Playlists</span>
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <ul>
+                    <li><a href="#"> English Hits</a></li>
+                    <li><a href="#"> Filipino Hits</a></li>
+                    <li><a href="#">K-pop Favorites</a></li>
+                </ul>
+                <div class="section-title">2025 Vibes</div>
+                <ul>
+                    <li><a href="#">abcde</a></li>
+                    <li><a href="#">abcde</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content">
+               <div class="nav-buttons">
+                    <button class="nav-btn">‹</button>
+                    <button class="nav-btn">›</button>
+                </div>
+                <button class="create-btn">
+                    <span>+</span>
+                    <span>Create</span>
+                </button>
+
+                <div class="playlist-header">
+                    <div class="playlist-cover"></div>
+                    <div class="playlist-info">
+                        <h2 class="playlist-name">English Hits</h2>
+                        <p class="playlist-description">Description</p>
+                        <div class="playlist-actions">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <button class="shuffle-btn">Shuffle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls-bar">
+                    <div class="search-sort">
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <i class="fas fa-search" style="position: absolute; left: 12px; opacity: 0.6; font-size: 14px;"></i>
+                            <input type="text" class="search-input" placeholder="Search">
+                        </div>
+                        <button class="sort-btn">
+                            <span>Sort by</span>
+                            <span>≡</span>
+                        </button>
+                    </div>
+                </div>
+
+                <table class="tracks-table">
+                    <thead>
+                        <tr>
+                            <th class="track-number">#</th>
+                            <th>Title</th>
+                            <th>Artist</th>
+                            <th>Album</th>
+                            <th>Year Released</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="track-number">1</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">2</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">3</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">4</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">5</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">6</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">7</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="track-number">8</td>
+                            <td>song</td>
+                            <td>name</td>
+                            <td>album</td>
+                            <td>0000</td>
+                            <td class="duration-cell">
+                                <span class="time-text">00:00</span>
+                                <span class="song-options">
+                                    <button class="options-btn">⋯</button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="now-playing-bar">
+        <div class="song-info">
+            <div class="song-cover-placeholder"></div>
+            <div class="song-details">
+                <span class="song-title">Song Title</span>
+                <span class="song-artist">abcd</span>
+            </div>
+            <i class="far fa-star" id="favorite-star"></i>
+        </div>
+
+        <div class="center-player">
+            <div class="player-controls">
+                <i class="fas fa-shuffle"></i>
+                <i class="fas fa-backward-step"></i>
+                <i class="fas fa-play-circle large-icon" id="play-pause-btn"></i>
+                <i class="fas fa-forward-step"></i>
+                <i class="fas fa-repeat"></i>
+            </div>
+
+            <div class="progress-bar-container">
+                <span id="current-time">00:00</span>
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="duration">00:00</span>
+            </div>
+        </div>
+
+        <div class="volume-controls">
+            <i class="fas fa-list-ul"></i>
+            <i class="fas fa-volume-up" id="volume-icon"></i>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+            <i class="fas fa-expand"></i>
+        </div>
+    </div>
+
+    <script>
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const favoriteStar = document.getElementById('favorite-star');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeIcon = document.getElementById('volume-icon');
+        
+        let isPlaying = false;
+
+        // Play/Pause toggle
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playPauseBtn.classList.remove('fa-play-circle');
+                playPauseBtn.classList.add('fa-pause-circle');
+            } else {
+                playPauseBtn.classList.remove('fa-pause-circle');
+                playPauseBtn.classList.add('fa-play-circle');
+            }
+        });
+
+        // Favorite toggle
+        favoriteStar.addEventListener('click', () => {
+            if (favoriteStar.classList.contains('far')) {
+                favoriteStar.classList.remove('far');
+                favoriteStar.classList.add('fas');
+                favoriteStar.style.color = 'white';
+            } else {
+                favoriteStar.classList.remove('fas');
+                favoriteStar.classList.add('far');
+                favoriteStar.style.color = '';
+            }
+        });
+
+        // Progress bar click
+        progressBar.addEventListener('click', (e) => {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            const percent = (clickX / width) * 100;
+            progressFill.style.width = percent + '%';
+        });
+
+        // Volume slider
+        function updateVolumeFill() {
+            const value = (volumeSlider.value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+            volumeSlider.style.background = linear-gradient(to right, var(--text-color) 0%, var(--text-color) ${value}%, #404b56 ${value}%, #404b56 100%);
+        }
+
+        updateVolumeFill();
+
+        volumeSlider.addEventListener('input', () => {
+            const volumeLevel = parseFloat(volumeSlider.value);
+            updateVolumeFill();
+
+            volumeIcon.classList.remove('fa-volume-up', 'fa-volume-down', 'fa-volume-off');
+
+            if (volumeLevel === 0) {
+                volumeIcon.classList.add('fa-volume-off');
+            } else if (volumeLevel < 0.5) {
+                volumeIcon.classList.add('fa-volume-down');
+            } else {
+                volumeIcon.classList.add('fa-volume-up');
+            }
+        });
+
+        // Track row click
+        const trackRows = document.querySelectorAll('.tracks-table tbody tr');
+        trackRows.forEach(row => {
+            row.addEventListener('click', () => {
+                const title = row.cells[1].textContent;
+                const artist = row.cells[2].textContent;
+
+                document.querySelector('.song-title').textContent = title;
+                document.querySelector('.song-artist').textContent = artist;
+
+                if (!isPlaying) {
+                    playPauseBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

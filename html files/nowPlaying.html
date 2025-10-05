@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now Playing - Spawtify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        
+        .header {
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 5px;
+            width: fit-content;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px 12px;
+            font-size: 20px;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.8;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            padding: 6px;
+        }
+
+        .header-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Main Content - Centered Layout */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 60px 20px;
+            min-height: 0;
+        }
+
+        .now-playing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 550px;
+            width: 100%;
+            gap: 20px;
+        }
+
+        /* Album Art */
+        .album-art {
+            width: 280px;
+            height: 280px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            transition: transform 0.3s ease;
+        }
+
+        .album-art:hover {
+            transform: scale(1.02);
+        }
+
+        /* Track Info */
+        .track-info-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .track-details {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .track-title {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .track-artist {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .track-album {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            width: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .progress-bar:hover {
+            height: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 35%;
+            background: white;
+            border-radius: 3px;
+            position: relative;
+            transition: width 0.1s ease;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar:hover .progress-fill::after {
+            opacity: 1;
+        }
+
+        .time-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .main-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            padding: 6px;
+            font-size: 20px;
+        }
+
+        .control-btn:hover {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .play-pause-btn {
+            width: 48px;
+            height: 48px;
+            background: white;
+            color: #1e3a8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            margin: 0 6px;
+            font-size: 24px;
+        }
+
+        .play-pause-btn:hover {
+            transform: scale(1.1);
+            background: #f0f0f0;
+        }
+
+        .prev-next {
+            font-size: 24px;
+        }
+
+        /* Bottom Controls Row */
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 8px;
+        }
+
+        .left-actions, .right-actions {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex: 1;
+        }
+
+        .right-actions {
+            justify-content: flex-end;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+            padding: 4px;
+        }
+
+        .icon-btn:hover {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        .icon-btn.active {
+            opacity: 1;
+            color: #93c5fd;
+        }
+
+        /* Volume Control */
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-icon {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+            font-size: 18px;
+        }
+
+        .volume-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .volume-slider {
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .volume-slider:hover {
+            height: 6px;
+        }
+
+        .volume-fill {
+            height: 100%;
+            width: 70%;
+            background: white;
+            border-radius: 2px;
+            position: relative;
+            transition: width 0.1s ease;
+        }
+
+        .volume-fill::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .volume-slider:hover .volume-fill::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+     <div class="header">
+            <div class="nav-buttons">
+                <button class="nav-btn">‹</button>
+                <button class="nav-btn">›</button>
+            </div>
+        </div>
+
+    <main class="main-content">
+        <div class="now-playing-container">
+            <div class="album-art"><i class="fas fa-music"></i></div>
+
+            <div class="track-info-section">
+                <div class="track-details">
+                    <h1 class="track-title">Song Title</h1>
+                    <h2 class="track-artist">Artist Name</h2>
+                    <p class="track-album">Album Name • 2024</p>
+                </div>
+
+                <div class="progress-section">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="time-labels">
+                        <span id="currentTime">1:23</span>
+                        <span id="totalTime">3:45</span>
+                    </div>
+                </div>
+
+                <div class="controls-section">
+                    <div class="main-controls">
+                        <button class="control-btn" id="shuffleBtn">
+                            <i class="fas fa-shuffle"></i>
+                        </button>
+                        <button class="control-btn prev-next">
+                            <i class="fas fa-backward-step"></i>
+                        </button>
+                        <button class="control-btn play-pause-btn" id="playPauseBtn">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class="control-btn prev-next">
+                            <i class="fas fa-forward-step"></i>
+                        </button>
+                        <button class="control-btn" id="repeatBtn">
+                            <i class="fas fa-repeat"></i>
+                        </button>
+                    </div>
+
+                    <div class="bottom-controls">
+                        <div class="left-actions">
+                            <button class="icon-btn" id="favoriteBtn">
+                                <i class="far fa-star"></i>
+                            </button>
+                            <button class="icon-btn">
+                                <i class="fas fa-plus-circle"></i>
+                            </button>
+                        </div>
+
+                        <div class="right-actions">
+                            <button class="icon-btn">
+                                <i class="fas fa-list-ul"></i>
+                            </button>
+                            <div class="volume-control">
+                                <div class="volume-icon">
+                                    <i class="fas fa-volume-up" id="volumeIcon"></i>
+                                </div>
+                                <div class="volume-slider" id="volumeSlider">
+                                    <div class="volume-fill" id="volumeFill"></div>
+                                </div>
+                            </div>
+                            <button class="icon-btn">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Play/Pause functionality
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        let isPlaying = true;
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            const icon = playPauseBtn.querySelector('i');
+            if (isPlaying) {
+                icon.className = 'fas fa-pause';
+            } else {
+                icon.className = 'fas fa-play';
+            }
+        });
+
+        // Progress bar
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const percent = ((e.clientX - rect.left) / rect.width) * 100;
+            progressFill.style.width = percent + '%';
+        });
+
+        // Volume control
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeFill = document.getElementById('volumeFill');
+        const volumeIcon = document.getElementById('volumeIcon');
+        
+        volumeSlider.addEventListener('click', (e) => {
+            const rect = volumeSlider.getBoundingClientRect();
+            const percent = ((e.clientX - rect.left) / rect.width) * 100;
+            const clampedPercent = Math.max(0, Math.min(100, percent));
+            volumeFill.style.width = clampedPercent + '%';
+            
+            // Update volume icon
+            if (clampedPercent === 0) {
+                volumeIcon.className = 'fas fa-volume-off';
+            } else if (clampedPercent < 50) {
+                volumeIcon.className = 'fas fa-volume-down';
+            } else {
+                volumeIcon.className = 'fas fa-volume-up';
+            }
+        });
+
+        // Favorite button
+        const favoriteBtn = document.getElementById('favoriteBtn');
+        favoriteBtn.addEventListener('click', () => {
+            favoriteBtn.classList.toggle('active');
+            const icon = favoriteBtn.querySelector('i');
+            if (favoriteBtn.classList.contains('active')) {
+                icon.className = 'fas fa-star';
+            } else {
+                icon.className = 'far fa-star';
+            }
+        });
+
+        // Shuffle button
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        shuffleBtn.addEventListener('click', () => {
+            shuffleBtn.classList.toggle('active');
+        });
+
+        // Repeat button
+        const repeatBtn = document.getElementById('repeatBtn');
+        repeatBtn.addEventListener('click', () => {
+            repeatBtn.classList.toggle('active');
+        });
+
+        // Back button
+        const backBtn = document.getElementById('backBtn');
+        backBtn.addEventListener('click', () => {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>
