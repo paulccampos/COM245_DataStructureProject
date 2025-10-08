@@ -8,7 +8,8 @@
   "duration": 277,
   "play_count": 0,
   "vibe": ["romantic", "chill"],
-  "file": "mp3/TakeCare.mp3"
+  "file": "mp3/TakeCare.mp3",
+  "imagePath": "/com/example/images/vector-picture-icon.jpg"
 },
 {
   "_id": { "$oid": "68c601a7877b93789568d990" },
@@ -20,7 +21,8 @@
   "duration": 347,
   "play_count": 0,
   "vibe": ["sad", "late night"],
-  "file": "mp3/MarvinsRoom.mp3"
+  "file": "mp3/MarvinsRoom.mp3",
+  "imagePath": "/com/example/images/vector-picture-icon.jpg"
 },
 {
   "_id": { "$oid": "68c601a7877b93789568d991" },
@@ -32,7 +34,8 @@
   "duration": 227,
   "play_count": 0,
   "vibe": ["romantic", "chill"],
-  "file": "mp3/HoldOnWereGoingHome.mp3"
+  "file": "mp3/HoldOnWereGoingHome.mp3",
+  "imagePath": "/com/example/images/vector-picture-icon.jpg"
 },
 {
   "_id": { "$oid": "68c601a7877b93789568d992" },
@@ -44,7 +47,8 @@
   "duration": 257,
   "play_count": 0,
   "vibe": ["party", "motivational"],
-  "file": "mp3/BestIEverHad.mp3"
+  "file": "mp3/BestIEverHad.mp3",
+  "imagePath": "/com/example/images/vector-picture-icon.jpg"
 },
 {
   "_id": { "$oid": "68c601a7877b93789568d993" },
@@ -56,7 +60,8 @@
   "duration": 302,
   "play_count": 0,
   "vibe": ["reflective", "chill"],
-  "file": "mp3/LookWhatYouveDone.mp3"
+  "file": "mp3/LookWhatYouveDone.mp3",
+  "imagePath": "/com/example/images/vector-picture-icon.jpg"
 },
 {
   "_id": { "$oid": "68c601a7877b93789568d994" },

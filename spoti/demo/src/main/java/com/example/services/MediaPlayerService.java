@@ -52,8 +52,11 @@ public class MediaPlayerService {
         String currentUser = com.example.App.getCurrentUsername();
         if (currentUser != null) {
             mongoService.updateSongPlayCounts(song.getTitle(), song.getArtist(), currentUser, 1);
+            song.incrementUserPlay(currentUser);
         }
         mongoService.updateSongProperty(song.getTitle(), song.getArtist(), "globalPlayCount", song.getGlobalPlayCount() + 1);
+        song.setGlobalPlayCount(song.getGlobalPlayCount() + 1);
+        System.out.println("Play count updated for " + song.getTitle() + " to " + song.getGlobalPlayCount());
 
         try {
             if (mediaPlayer != null) {

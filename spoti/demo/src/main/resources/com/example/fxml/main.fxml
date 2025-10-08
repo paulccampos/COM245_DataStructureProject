@@ -4,33 +4,34 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.MainController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.MainController">
    <left>
-      <VBox styleClass="sidebar" prefWidth="280.0" BorderPane.alignment="CENTER">
+      <VBox prefWidth="280.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
             <Label styleClass="logo" text="SPAWITFY" />
             <VBox styleClass="main-nav">
                <children>
-                  <Hyperlink text="Home" onAction="#onHome" />
+                  <Hyperlink onAction="#onHome" text="Home" />
                   <Hyperlink onAction="#onProfile" text="Profile" />
-                  <Hyperlink text="Search" onAction="#onSearch" />
-                  <Hyperlink text="Songs" onAction="#onSongs" />
-                  <Hyperlink text="Your Library" onAction="#onLibrary" />
+                  <Hyperlink onAction="#onSearch" text="Search" />
+                  <Hyperlink onAction="#onSongs" text="Songs" />
+                  <Hyperlink onAction="#onLibrary" text="Your Library" />
                </children>
             </VBox>
          </children>
       </VBox>
    </left>
    <bottom>
-      <HBox fx:id="mediaPlayerBar" styleClass="now-playing-bar" prefHeight="90.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="mediaPlayerBar" prefHeight="90.0" styleClass="now-playing-bar" BorderPane.alignment="CENTER">
          <children>
-            <HBox styleClass="song-info" prefWidth="300.0">
+            <HBox prefHeight="68.0" prefWidth="192.0" styleClass="song-info">
                <children>
-                  <VBox styleClass="song-cover-placeholder" prefWidth="60.0" prefHeight="60.0" />
+                  <VBox prefHeight="60.0" prefWidth="60.0" styleClass="song-cover-placeholder" />
                   <VBox styleClass="song-details">
                      <children>
                         <Label fx:id="currentSongLabel" style="-fx-font-weight: bold;" text="Song Title" />
@@ -39,16 +40,17 @@
                   </VBox>
                </children>
             </HBox>
+            <ImageView fx:id="currentSongImage" fitHeight="67.0" fitWidth="72.0" preserveRatio="true" />
             <VBox alignment="CENTER" styleClass="center-player" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox styleClass="player-controls" spacing="20.0">
+                  <HBox spacing="20.0" styleClass="player-controls">
                      <children>                        
-                        <Button fx:id="previousButton" text="⏮" onAction="#onPrevious" />
-                        <Button fx:id="playPauseButton" text="▶" onAction="#onPlayPause" />
-                        <Button fx:id="nextButton" text="⏭" onAction="#onNext" />
+                        <Button fx:id="previousButton" onAction="#onPrevious" text="⏮" />
+                        <Button fx:id="playPauseButton" onAction="#onPlayPause" text="▶" />
+                        <Button fx:id="nextButton" onAction="#onNext" text="⏭" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" maxWidth="500.0" styleClass="progress-bar-container" spacing="10.0">
+                  <HBox alignment="CENTER" maxWidth="500.0" spacing="10.0" styleClass="progress-bar-container">
                      <children>
                         <Label fx:id="currentTimeLabel" text="0:00" />
                         <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
