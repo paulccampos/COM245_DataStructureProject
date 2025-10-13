@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import java.util.List;
+import java.io.IOException;
 
 import com.example.App;
 import com.example.models.Song;
@@ -38,7 +39,7 @@ public class queuecontroller {
             previousView = "home";
         }
         loadQueue();
-
+        MediaPlayerHandler.getInstance().registerQueueController(this);
     }
 
     private void loadQueue() {
@@ -75,6 +76,11 @@ public class queuecontroller {
 
         com.example.models.Queue queueModel = mediaPlayerService.getQueue();
         List<Song> queueSongs = queueModel.getSongs();
+        
+        if (queueSongs.isEmpty()) {
+            queueVBox.getChildren().add(new Label("The queue is empty."));
+        }
+        
         for (int i = 0; i < queueSongs.size(); i++) {
             final int idx = i;
             Song song = queueSongs.get(idx);
@@ -163,8 +169,13 @@ public class queuecontroller {
     }
 
     @FXML
-    private void onBack() throws java.io.IOException {
+    private void onBack() throws IOException {
         App.loadViewInMain(previousView != null ? previousView : "home");
     }
 
+    public void refreshQueue() {
+        javafx.application.Platform.runLater(this::loadQueue);
+    }
+
 }
+
