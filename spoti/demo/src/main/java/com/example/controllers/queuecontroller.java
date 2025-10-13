@@ -9,6 +9,7 @@ import com.example.services.MediaPlayerService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -21,6 +22,9 @@ public class queuecontroller {
 
     @FXML
     private Label currentSongLabel;
+
+    @FXML
+    private ImageView selectedSongImage;
 
     private static String previousView;
 
@@ -43,8 +47,30 @@ public class queuecontroller {
         Song currentSong = mediaPlayerService.getCurrentSong();
         if (currentSong != null) {
             currentSongLabel.setText("Now Playing: " + currentSong.getTitle() + " - " + currentSong.getArtist());
+
+            // Set the selected song image
+            if (selectedSongImage != null) {
+                String imagePath = currentSong.getImagePath();
+                if (imagePath == null) {
+                    imagePath = "/com/example/images/vector-picture-icon.jpg";
+                }
+                try {
+                    java.net.URL url = getClass().getResource(imagePath);
+                    if (url != null) {
+                        selectedSongImage.setImage(new javafx.scene.image.Image(url.toExternalForm()));
+                    } else {
+                        System.out.println("Image resource not found: " + imagePath);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Exception while loading image: " + imagePath);
+                    e.printStackTrace();
+                }
+            }
         } else {
             currentSongLabel.setText("No song playing");
+            if (selectedSongImage != null) {
+                selectedSongImage.setImage(null);
+            }
         }
 
         com.example.models.Queue queueModel = mediaPlayerService.getQueue();
@@ -53,6 +79,26 @@ public class queuecontroller {
             final int idx = i;
             Song song = queueSongs.get(idx);
             HBox hbox = new HBox(10);
+            hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+            ImageView albumArt = new ImageView();
+            albumArt.setFitHeight(40);
+            albumArt.setFitWidth(40);
+            String imagePath = song.getImagePath();
+            if (imagePath == null) {
+                imagePath = "/com/example/images/vector-picture-icon.jpg";
+            }
+            try {
+                java.net.URL url = getClass().getResource(imagePath);
+                if (url != null) {
+                    albumArt.setImage(new javafx.scene.image.Image(url.toExternalForm()));
+                } else {
+                    System.out.println("Image resource not found: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + imagePath);
+                e.printStackTrace();
+            }
 
             String songText = (idx + 1) + ". " + song.getTitle() + " - " + song.getArtist();
             if (song.isManualAddition()) {
@@ -77,7 +123,7 @@ public class queuecontroller {
                 moveDownButton.setDisable(true);
             }
 
-            hbox.getChildren().addAll(songLabel, moveUpButton, moveDownButton, deleteButton);
+            hbox.getChildren().addAll(albumArt, songLabel, moveUpButton, moveDownButton, deleteButton);
             queueVBox.getChildren().add(hbox);
         }
     }
@@ -114,6 +160,11 @@ public class queuecontroller {
 
     public static void setPreviousView(String viewName) {
         previousView = viewName;
+    }
+
+    @FXML
+    private void onBack() throws java.io.IOException {
+        App.loadViewInMain(previousView != null ? previousView : "home");
     }
 
 }

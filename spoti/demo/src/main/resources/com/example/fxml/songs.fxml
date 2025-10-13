@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
@@ -18,7 +19,7 @@
          <children>
             <ComboBox fx:id="sortComboBox" promptText="Sort by..." />
             <ComboBox fx:id="genreComboBox" promptText="Filter by Genre..." />
-            
+
             <!-- This is the section you need to add to your playlist.fxml -->
             <javafx.scene.layout.Region HBox.hgrow="ALWAYS" />
             <Button fx:id="optionsButton" text="..." style="-fx-font-size: 16px; -fx-font-weight: bold;" />
@@ -26,6 +27,7 @@
 
          </children>
       </HBox>
+
       <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
          <content>
             <VBox fx:id="songsVBox" spacing="5.0" />

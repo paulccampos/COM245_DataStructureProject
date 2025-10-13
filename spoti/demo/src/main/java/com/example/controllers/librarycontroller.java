@@ -10,17 +10,15 @@ import org.bson.Document;
 import com.example.App;
 import com.example.MongoService;
 
-import javafx.geometry.Pos;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -36,6 +34,9 @@ public class librarycontroller {
 
     @FXML
     private TextField searchTextField;
+
+    @FXML
+    private ImageView selectedSongImage;
 
     public librarycontroller() {
         mongoService = App.getMongoServiceStatic();
@@ -108,15 +109,49 @@ public class librarycontroller {
         item.setAlignment(Pos.CENTER);
         item.setStyle("-fx-cursor: hand;");
 
-        ImageView cover = new ImageView();
-        try {
-            cover.setImage(new Image(getClass().getResource("/com/example/images/vector-picture-icon.jpg").toExternalForm()));
-        } catch (Exception e) {
-            cover.setImage(null);
+        // Create a GridPane for the album art
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setAlignment(Pos.CENTER);
+
+        List<Document> songs = mongoService.getSongsForPlaylist(title, createdBy);
+        if (songs.isEmpty()) {
+            ImageView cover = new ImageView();
+            try {
+                cover.setImage(new Image(getClass().getResource("/com/example/images/vector-picture-icon.jpg").toExternalForm()));
+            } catch (Exception e) {
+                cover.setImage(null);
+            }
+            cover.setFitWidth(180);
+            cover.setFitHeight(180);
+            cover.setPreserveRatio(true);
+            grid.add(cover, 0, 0, 2, 2);
+        } else {
+            int num = Math.min(4, songs.size());
+            for (int i = 0; i < num; i++) {
+                ImageView iv = new ImageView();
+                iv.setFitWidth(90);
+                iv.setFitHeight(90);
+                String path = songs.get(i).getString("imagePath");
+                if (path == null) {
+                    path = "/com/example/images/vector-picture-icon.jpg";
+                }
+                try {
+                    java.net.URL url = getClass().getResource(path);
+                    if (url != null) {
+                        Image img = new Image(url.toExternalForm());
+                        iv.setImage(img);
+                    } else {
+                        System.out.println("Image resource not found: " + path);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Exception while loading image: " + path);
+                    e.printStackTrace();
+                }
+                grid.add(iv, i % 2, i / 2);
+            }
         }
-        cover.setFitWidth(180);
-        cover.setFitHeight(180);
-        cover.setPreserveRatio(true);
 
         Label titleLabel = new Label(title);
         titleLabel.setStyle("-fx-font-weight: 500; -fx-font-size: 15px;");
@@ -127,7 +162,7 @@ public class librarycontroller {
         VBox textContainer = new VBox(5, titleLabel, subtitleLabel);
         textContainer.setAlignment(Pos.CENTER);
 
-        VBox clickContainer = new VBox(cover, textContainer);
+        VBox clickContainer = new VBox(grid, textContainer);
         clickContainer.setAlignment(Pos.CENTER);
         clickContainer.setSpacing(12);
         clickContainer.setOnMouseClicked(event -> {

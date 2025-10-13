@@ -22,6 +22,7 @@
             <ComboBox fx:id="sortComboBox" promptText="Sort by..." />
          </children>
       </HBox>
+
       <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
          <content>
             <VBox fx:id="libraryGrid" spacing="20.0" />

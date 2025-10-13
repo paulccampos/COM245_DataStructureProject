@@ -2,9 +2,12 @@ package com.example.controllers;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 
@@ -18,12 +21,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -56,6 +62,11 @@ public class playlistcontroller {
 
     @FXML
     private Button optionsButton;
+
+    @FXML
+    private VBox coverBox;
+
+
 
     private static String pendingPlaylistName;
     private static String pendingPreviousView;
@@ -127,6 +138,57 @@ public class playlistcontroller {
             }
             if (playlistDescriptionLabel != null) {
                 playlistDescriptionLabel.setText(description != null ? description : "");
+            }
+
+            if (coverBox != null) {
+                String username = App.getCurrentUsername();
+                List<Document> songs = mongoService.getSongsForPlaylist(playlistName, username);
+                Map<String, Integer> albumPlays = new HashMap<>();
+                Map<String, String> albumImage = new HashMap<>();
+                for (Document song : songs) {
+                    String album = song.getString("album");
+                    int play = song.getInteger("play_count", 0);
+                    albumPlays.put(album, albumPlays.getOrDefault(album, 0) + play);
+                    if (!albumImage.containsKey(album)) {
+                        albumImage.put(album, song.getString("imagePath"));
+                    }
+                }
+                List<String> albumList = albumPlays.entrySet().stream()
+                    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                    .map(e -> e.getKey())
+                    .collect(Collectors.toList());
+                int num = Math.min(4, albumList.size());
+                coverBox.getChildren().clear();
+                GridPane grid = new GridPane();
+                grid.setHgap(5);
+                grid.setVgap(5);
+                for (int i = 0; i < num; i++) {
+                    String album = albumList.get(i);
+                    ImageView iv = new ImageView();
+                    iv.setFitWidth(70);
+                    iv.setFitHeight(70);
+                    String path = albumImage.get(album);
+                    if (path != null && path.startsWith("/Albums")) {
+                        path = "/com/example" + path;
+                    }
+                    if (path == null) {
+                        path = "/com/example/images/vector-picture-icon.jpg";
+                    }
+                    try {
+                        java.net.URL url = getClass().getResource(path);
+                        if (url != null) {
+                            Image img = new Image(url.toExternalForm());
+                            iv.setImage(img);
+                            grid.add(iv, i % 2, i / 2);
+                        } else {
+                            System.out.println("Image resource not found: " + path);
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Exception while loading image: " + path);
+                        e.printStackTrace();
+                    }
+                }
+                coverBox.getChildren().add(grid);
             }
 
             ContextMenu contextMenu = new ContextMenu();
@@ -208,19 +270,23 @@ public class playlistcontroller {
         songsVBox.getChildren().add(totalDurationLabel);
 
         HBox headerBox = new HBox(10);
+        Label imageHeader = new Label();
+        imageHeader.setPrefWidth(40);
         Label titleHeader = new Label("Title");
-        titleHeader.setPrefWidth(200);
+        titleHeader.setPrefWidth(150);
         Label artistHeader = new Label("Artist");
-        artistHeader.setPrefWidth(150);
+        artistHeader.setPrefWidth(120);
         Label albumHeader = new Label("Album");
-        albumHeader.setPrefWidth(150);
+        albumHeader.setPrefWidth(120);
+        Label fileHeader = new Label("File");
+        fileHeader.setPrefWidth(200);
         Label durationHeader = new Label("Duration");
         durationHeader.setPrefWidth(100);
         Label actionsHeader = new Label("Actions");
         actionsHeader.setPrefWidth(250);
         Label favoriteHeader = new Label("Favorite");
         favoriteHeader.setPrefWidth(80);
-        headerBox.getChildren().addAll(titleHeader, artistHeader, albumHeader, durationHeader, favoriteHeader, actionsHeader);
+        headerBox.getChildren().addAll(imageHeader, titleHeader, artistHeader, albumHeader, fileHeader, durationHeader, favoriteHeader, actionsHeader);
         songsVBox.getChildren().add(headerBox);
 
         for (Document song : songs) {
@@ -239,12 +305,42 @@ public class playlistcontroller {
             }
 
             HBox songBox = new HBox(10);
+            songBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+            ImageView albumArt = new ImageView();
+            albumArt.setFitHeight(40);
+            albumArt.setFitWidth(40);
+            String imagePath = song.getString("imagePath");
+            if (imagePath != null && imagePath.startsWith("/Albums")) {
+                imagePath = "/com/example" + imagePath;
+            }
+            if (imagePath == null) {
+                imagePath = "/com/example/images/vector-picture-icon.jpg";
+            }
+            try {
+                java.net.URL url = getClass().getResource(imagePath);
+                if (url != null) {
+                    albumArt.setImage(new Image(url.toExternalForm()));
+                } else {
+                    System.out.println("Image resource not found: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + imagePath);
+                e.printStackTrace();
+            }
+
             Label titleLabel = new Label(title);
-            titleLabel.setPrefWidth(200);
+            titleLabel.setPrefWidth(150);
             Label artistLabel = new Label(artist);
-            artistLabel.setPrefWidth(150);
+            artistLabel.setPrefWidth(120);
             Label albumLabel = new Label(album);
-            albumLabel.setPrefWidth(150);
+            albumLabel.setPrefWidth(120);
+            String file = song.getString("file");
+            if (file == null) {
+                file = "";
+            }
+            Label fileLabel = new Label(file);
+            fileLabel.setPrefWidth(200);
             Label durationLabel = new Label(duration);
             durationLabel.setPrefWidth(100);
 
@@ -282,7 +378,7 @@ public class playlistcontroller {
                 favoriteLabel.setText("");
             }
 
-            songBox.getChildren().addAll(titleLabel, artistLabel, albumLabel, durationLabel, favoriteLabel, spacer, menuButton, postNudge);
+            songBox.getChildren().addAll(albumArt, titleLabel, artistLabel, albumLabel, fileLabel, durationLabel, favoriteLabel, spacer, menuButton, postNudge);
             songsVBox.getChildren().add(songBox);
         }
     }

@@ -165,8 +165,15 @@ public class MediaPlayerHandler {
                         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
                         currentSongImage.setImage(image);
                     } catch (Exception e) {
-                        System.err.println("Failed to load image: " + imagePath);
-                        currentSongImage.setImage(null);
+                        System.err.println("[MediaPlayerHandler] Exception while loading image: " + imagePath);
+                        e.printStackTrace();
+                        try {
+                            Image fallbackImage = new Image(getClass().getResource("/com/example/images/vector-picture-icon.jpg").toExternalForm());
+                            currentSongImage.setImage(fallbackImage);
+                        } catch (Exception fallbackE) {
+                            System.err.println("[MediaPlayerHandler] Fallback image also failed: " + fallbackE.getMessage());
+                            currentSongImage.setImage(null);
+                        }
                     }
                 }
 

@@ -43,7 +43,7 @@ public class Song {
 
         this.file = doc.getString("file");
         this.imagePath = doc.getString("imagePath");
-        this.globalPlayCount = doc.getInteger("globalPlayCount", 0);
+        this.globalPlayCount = doc.getInteger("play_count", 0);
         Object userCountsObj = doc.get("userPlayCounts");
         if (userCountsObj instanceof Map) {
             this.userPlayCounts = (Map<String, Integer>) userCountsObj;

@@ -1,5 +1,4 @@
 com\example\models\Queue.class
 com\example\models\Queue$Type.class
-com\example\models\User.class
-com\example\models\Playlist.class
 com\example\models\Song.class
+com\example\models\Playlist.class

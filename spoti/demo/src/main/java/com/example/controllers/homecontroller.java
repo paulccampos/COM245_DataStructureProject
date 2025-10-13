@@ -39,6 +39,9 @@ public class homecontroller {
     @FXML
     private Label welcomeLabel;
 
+    @FXML
+    private ImageView selectedSongImage;
+
 
     public homecontroller() {
         mongoService = App.getMongoServiceStatic();
@@ -194,7 +197,7 @@ public class homecontroller {
         box.getChildren().addAll(iv, titleLabel, artistLabel);
 
         box.setOnMouseClicked(e -> {
-            App.playSong(song);
+            playSong(song);
         });
 
         return box;
@@ -203,5 +206,28 @@ public class homecontroller {
     private void navigateToPlaylist(String playlistName) throws IOException {
         com.example.controllers.playlistcontroller.setPendingPlaylist(playlistName, "home");
         App.loadViewInMain("playlist");
+    }
+
+    private void playSong(Document song) {
+        App.playSong(song);
+
+        // Set the selected song image
+        if (selectedSongImage != null) {
+            String imagePath = song.getString("imagePath");
+            if (imagePath == null) {
+                imagePath = "/com/example/images/vector-picture-icon.jpg";
+            }
+            try {
+                java.net.URL url = getClass().getResource(imagePath);
+                if (url != null) {
+                    selectedSongImage.setImage(new Image(url.toExternalForm()));
+                } else {
+                    System.out.println("Image resource not found: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + imagePath);
+                e.printStackTrace();
+            }
+        }
     }
 }

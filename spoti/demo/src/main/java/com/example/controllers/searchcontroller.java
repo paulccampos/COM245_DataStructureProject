@@ -10,8 +10,14 @@ import com.example.MongoService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class searchcontroller {
 
@@ -19,7 +25,10 @@ public class searchcontroller {
     private TextField searchTextField;
 
     @FXML
-    private ListView<String> resultsListView;
+    private ListView<Document> resultsListView;
+
+    @FXML
+    private ImageView selectedSongImage;
 
     private MongoService mongoService;
 
@@ -32,9 +41,47 @@ public class searchcontroller {
         });
 
         resultsListView.setOnMouseClicked(event -> {
-            String selected = resultsListView.getSelectionModel().getSelectedItem();
+            Document selected = resultsListView.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 playSelectedSong(selected);
+            }
+        });
+
+        resultsListView.setCellFactory(param -> new ListCell<Document>() {
+            private ImageView imageView = new ImageView();
+            private Text title = new Text();
+            private Text artist = new Text();
+            private VBox vBox = new VBox(title, artist);
+            private HBox hBox = new HBox(10, imageView, vBox);
+
+            @Override
+            protected void updateItem(Document item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    title.setText(item.getString("title"));
+                    artist.setText(item.getString("artist"));
+                    String imagePath = item.getString("imagePath");
+                    if (imagePath == null) {
+                        imagePath = "/com/example/images/vector-picture-icon.jpg";
+                    }
+                    try {
+                        java.net.URL url = getClass().getResource(imagePath);
+                        if (url != null) {
+                            imageView.setImage(new Image(url.toExternalForm()));
+                        } else {
+                            System.out.println("Image resource not found: " + imagePath);
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Exception while loading image: " + imagePath);
+                        e.printStackTrace();
+                    }
+                    imageView.setFitHeight(50);
+                    imageView.setFitWidth(50);
+                    setGraphic(hBox);
+                }
             }
         });
     }
@@ -45,27 +92,29 @@ public class searchcontroller {
             return;
         }
         List<Document> results = mongoService.searchSongs(query);
-        ObservableList<String> items = FXCollections.observableArrayList();
-        for (Document doc : results) {
-            String display = doc.getString("title") + " - " + doc.getString("artist");
-            items.add(display);
-        }
+        ObservableList<Document> items = FXCollections.observableArrayList(results);
         resultsListView.setItems(items);
     }
 
-    private void playSelectedSong(String selected) {
-        String[] parts = selected.split(" - ", 2);
-        if (parts.length < 2) {
-            return;
-        }
-        String title = parts[0];
-        String artist = parts[1];
+    private void playSelectedSong(Document selected) {
+        App.playSong(selected);
 
-        List<Document> allSongs = mongoService.getAllSongs();
-        for (Document song : allSongs) {
-            if (title.equals(song.getString("title")) && artist.equals(song.getString("artist"))) {
-                App.playSong(song);
-                break;
+        // Set the selected song image
+        if (selectedSongImage != null) {
+            String imagePath = selected.getString("imagePath");
+            if (imagePath == null) {
+                imagePath = "/com/example/images/vector-picture-icon.jpg";
+            }
+            try {
+                java.net.URL url = getClass().getResource(imagePath);
+                if (url != null) {
+                    selectedSongImage.setImage(new Image(url.toExternalForm()));
+                } else {
+                    System.out.println("Image resource not found: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + imagePath);
+                e.printStackTrace();
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.services;
 
-import java.io.File;
 import java.util.List;
 
 import com.example.MongoService;
@@ -80,9 +79,9 @@ public class MediaPlayerService {
             String filePath = song.getFile();
             if (filePath != null && !filePath.isEmpty()) {
                 try {
-                    File file = new File(filePath);
-                    if (file.exists()) {
-                        Media media = new Media(file.toURI().toString());
+                    java.net.URL resourceUrl = getClass().getResource(filePath);
+                    if (resourceUrl != null) {
+                        Media media = new Media(resourceUrl.toExternalForm());
                         mediaPlayer = new MediaPlayer(media);
                         mediaPlayer.setOnReady(() -> {
                             System.out.println("Media ready, duration: " + mediaPlayer.getTotalDuration());
@@ -97,7 +96,7 @@ public class MediaPlayerService {
                             next();
                         });
                     } else {
-                        System.err.println("File does not exist: " + file.getAbsolutePath());
+                        System.err.println("Resource not found: " + filePath);
                     }
                 } catch (Exception e) {
                     System.err.println("Error loading media file: " + filePath + " - " + e.getMessage());

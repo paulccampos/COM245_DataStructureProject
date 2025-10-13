@@ -85,6 +85,9 @@ public class MainController {
     }
 
     private void loadView(String fxmlName) {
+        if (currentViewName != null && currentViewName.equals(fxmlName)) {
+            return; // Do not reload the same view
+        }
         this.currentViewName = fxmlName;
         try {
             // Note: We assume the FXML files are now in a 'views' subfolder

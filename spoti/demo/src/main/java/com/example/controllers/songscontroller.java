@@ -18,6 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,6 +36,9 @@ public class songscontroller {
 
     @FXML
     private ComboBox<String> genreComboBox;
+
+    @FXML
+    private ImageView selectedSongImage;
 
     public songscontroller() {
         App app = new App();
@@ -99,13 +103,15 @@ public class songscontroller {
         songsVBox.getChildren().clear();
 
         HBox headerBox = new HBox(10);
+        Label imageHeader = new Label();
+        imageHeader.setPrefWidth(40);
         Label titleHeader = new Label("Title");
         titleHeader.setPrefWidth(200);
         Label artistHeader = new Label("Artist");
         artistHeader.setPrefWidth(150);
         Label albumHeader = new Label("Album");
         albumHeader.setPrefWidth(150);
-        headerBox.getChildren().addAll(titleHeader, artistHeader, albumHeader);
+        headerBox.getChildren().addAll(imageHeader, titleHeader, artistHeader, albumHeader);
         songsVBox.getChildren().add(headerBox);
 
         for (Document song : songs) {
@@ -114,6 +120,27 @@ public class songscontroller {
             String album = song.getString("album");
 
             HBox songBox = new HBox(10);
+            songBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+            ImageView albumArt = new ImageView();
+            albumArt.setFitHeight(40);
+            albumArt.setFitWidth(40);
+            String imagePath = song.getString("imagePath");
+            if (imagePath == null) {
+                imagePath = "/com/example/images/vector-picture-icon.jpg";
+            }
+            try {
+                java.net.URL url = getClass().getResource(imagePath);
+                if (url != null) {
+                    albumArt.setImage(new javafx.scene.image.Image(url.toExternalForm()));
+                } else {
+                    System.out.println("Image resource not found: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + imagePath);
+                e.printStackTrace();
+            }
+
             Label titleLabel = new Label(title);
             titleLabel.setPrefWidth(200);
             Label artistLabel = new Label(artist);
@@ -142,7 +169,7 @@ public class songscontroller {
                 }
             });
 
-            songBox.getChildren().addAll(titleLabel, artistLabel, albumLabel, spacer, menuButton);
+            songBox.getChildren().addAll(albumArt, titleLabel, artistLabel, albumLabel, spacer, menuButton);
             songsVBox.getChildren().add(songBox);
         }
     }
@@ -213,5 +240,24 @@ public class songscontroller {
     private void playSong(Document song) {
         mediaPlayerService.playSong(new com.example.models.Song(song));
         MediaPlayerHandler.getInstance().updateMediaPlayer();
+
+        // Set the selected song image
+        if (selectedSongImage != null) {
+            String imagePath = song.getString("imagePath");
+            if (imagePath == null) {
+                imagePath = "/com/example/images/vector-picture-icon.jpg";
+            }
+            try {
+                java.net.URL url = getClass().getResource(imagePath);
+                if (url != null) {
+                    selectedSongImage.setImage(new javafx.scene.image.Image(url.toExternalForm()));
+                } else {
+                    System.out.println("Image resource not found: " + imagePath);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + imagePath);
+                e.printStackTrace();
+            }
+        }
     }
 }
