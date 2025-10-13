@@ -2,6 +2,7 @@ package com.example.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.controllers.queuecontroller;
 
 import com.example.App;
 import com.example.services.MediaPlayerService;
@@ -12,8 +13,6 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
@@ -30,7 +29,8 @@ public class MediaPlayerHandler {
     private Button previousButton;
     private Button playPauseButton;
     private Button nextButton;
-    private ImageView currentSongImage;
+
+    private queuecontroller queueController;
 
     private List<Runnable> updateCallbacks = new ArrayList<>();
     private Timeline updateTimeline;
@@ -72,7 +72,7 @@ public class MediaPlayerHandler {
 
 
     public void registerUIComponents(HBox mediaPlayerBar, Label currentSongLabel, Label currentArtistLabel, Label currentTimeLabel, Label durationLabel,
-                                   ProgressBar progressBar, Button previousButton, Button playPauseButton, Button nextButton, ImageView currentSongImage) {
+                                   ProgressBar progressBar, Button previousButton, Button playPauseButton, Button nextButton) {
         this.mediaPlayerBar = mediaPlayerBar;
         this.currentSongLabel = currentSongLabel;
         this.currentArtistLabel = currentArtistLabel;
@@ -82,7 +82,6 @@ public class MediaPlayerHandler {
         this.previousButton = previousButton;
         this.playPauseButton = playPauseButton;
         this.nextButton = nextButton;
-        this.currentSongImage = currentSongImage;
 
         if (progressBar != null) {
             progressBar.setOnMouseClicked(event -> {
@@ -156,26 +155,6 @@ public class MediaPlayerHandler {
                 if (durationLabel != null) {
                     durationLabel.setText(service.getTotalDurationFormatted());
                 }
-                if (currentSongImage != null) {
-                    String imagePath = service.getCurrentSong().getImagePath();
-                    if (imagePath == null || imagePath.isEmpty()) {
-                        imagePath = "/com/example/images/vector-picture-icon.jpg";
-                    }
-                    try {
-                        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
-                        currentSongImage.setImage(image);
-                    } catch (Exception e) {
-                        System.err.println("[MediaPlayerHandler] Exception while loading image: " + imagePath);
-                        e.printStackTrace();
-                        try {
-                            Image fallbackImage = new Image(getClass().getResource("/com/example/images/vector-picture-icon.jpg").toExternalForm());
-                            currentSongImage.setImage(fallbackImage);
-                        } catch (Exception fallbackE) {
-                            System.err.println("[MediaPlayerHandler] Fallback image also failed: " + fallbackE.getMessage());
-                            currentSongImage.setImage(null);
-                        }
-                    }
-                }
 
             } else {
                 if (currentSongLabel != null) {
@@ -211,6 +190,10 @@ public class MediaPlayerHandler {
         for (Runnable callback : updateCallbacks) {
             callback.run();
         }
+
+        if (queueController != null) {
+            queueController.refreshQueue();
+        }
     }
 
 
@@ -221,6 +204,10 @@ public class MediaPlayerHandler {
 
     public void removeUpdateCallback(Runnable callback) {
         updateCallbacks.remove(callback);
+    }
+
+    public void registerQueueController(queuecontroller controller) {
+        this.queueController = controller;
     }
 
 }
