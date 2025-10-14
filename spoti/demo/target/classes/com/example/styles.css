@@ -1,0 +1,155 @@
+/* --- Color Palette and General --- */
+.root {
+    -spawtify-primary-color: #007bff; /* A nice, standard blue */
+    -spawtify-secondary-color: #0056b3; /* A darker blue for accents/hover */
+    -spawtify-background-color: #eaf6ff; /* A very light, airy blue for the main background */
+    -spawtify-sidebar-background: #d4eaff; /* A slightly darker blue for the sidebar */
+    -spawtify-media-player-background: #c2dfff; /* A darker blue for the media player */
+    -spawtify-text-color: #000000; /* Black text as requested */
+    -spawtify-subtle-text-color: #333333; /* Dark gray for less important text */
+    -spawtify-border-color: #b0d4f1;
+    -fx-background-color: -spawtify-background-color;
+    -fx-font-family: "Arial";
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    -fx-background-color: -spawtify-sidebar-background;
+    -fx-padding: 20px 10px;
+    -fx-spacing: 15px;
+}
+
+.logo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -spawtify-secondary-color;
+    -fx-padding: 0 0 10px 10px;
+}
+
+.main-nav {
+    -fx-spacing: 10px;
+    -fx-padding: 10px 0 0 0;
+}
+
+.main-nav .hyperlink {
+    -fx-text-fill: -spawtify-text-color;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-border-color: transparent;
+    -fx-underline: false;
+}
+
+.main-nav .hyperlink:hover {
+    -fx-text-fill: -spawtify-primary-color;
+    -fx-underline: false;
+}
+
+.playlists {
+    -fx-padding: 20px 10px 0 10px;
+    -fx-spacing: 10px;
+}
+
+.playlists-header {
+    -fx-alignment: center-left;
+    -fx-spacing: 10px;
+}
+
+.playlists-header .label {
+    -fx-text-fill: -spawtify-subtle-text-color;
+    -fx-font-weight: bold;
+}
+
+.playlists .hyperlink {
+    -fx-text-fill: -spawtify-subtle-text-color;
+    -fx-underline: false;
+}
+
+.playlists .hyperlink:hover {
+    -fx-text-fill: -spawtify-primary-color;
+    -fx-underline: false;
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    -fx-background-color: -spawtify-background-color;
+    -fx-padding: 20px;
+}
+
+.main-content .label {
+    -fx-text-fill: -spawtify-text-color;
+}
+
+.greeting .label {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.recent .label, .made-for-you .label, .best-artists .label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* --- Media Player Bar --- */
+.now-playing-bar {
+    -fx-background-color: -spawtify-media-player-background;
+    -fx-padding: 10px 20px;
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+    -fx-border-color: -spawtify-border-color transparent transparent transparent;
+    -fx-border-width: 1px;
+}
+
+.song-details .label {
+    -fx-text-fill: -spawtify-text-color; /* Black text */
+}
+
+.player-controls {
+    -fx-alignment: center;
+}
+
+.player-controls .button, .volume-controls .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -spawtify-text-color; /* Black text */
+    -fx-font-size: 18px;
+}
+
+.player-controls .button:hover, .volume-controls .button:hover {
+    -fx-text-fill: -spawtify-primary-color; /* Blue on hover */
+}
+
+.progress-bar-container .label {
+    -fx-text-fill: -spawtify-text-color; /* Black text */
+}
+
+/* --- Admin Panel --- */
+.admin-panel {
+    -fx-background-color: -spawtify-background-color;
+}
+
+.admin-sidebar {
+    -fx-background-color: -spawtify-sidebar-background;
+    -fx-border-color: -spawtify-border-color;
+    -fx-border-width: 1px;
+}
+
+.admin-header {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -spawtify-text-color;
+}
+
+.admin-subheader {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -spawtify-text-color;
+}
+
+.delete-button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c82333;
+}

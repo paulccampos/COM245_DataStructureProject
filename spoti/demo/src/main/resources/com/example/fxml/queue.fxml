@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="20.0" styleClass="main-content" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.queuecontroller">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Label fx:id="currentSongLabel" style="-fx-font-size: 40px; -fx-font-weight: bold;" text="Queue" />
+      <HBox alignment="CENTER_LEFT" spacing="20.0">
+         <children>
+            <javafx.scene.layout.Region HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#onClearQueue" text="Clear Queue" />
+            <Button mnemonicParsing="false" onAction="#onBack" text="Back" />
+         </children>
+      </HBox>
+
+      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox fx:id="queueVBox" spacing="5.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>
