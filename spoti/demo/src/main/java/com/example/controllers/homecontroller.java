@@ -196,7 +196,9 @@ public class homecontroller {
 
         box.getChildren().addAll(iv, titleLabel, artistLabel);
 
-        // Removed playSong on click to prevent accidental song play when opening/interacting with the app
+        box.setOnMouseClicked(e -> {
+            playSong(song);
+        });
 
         return box;
     }
