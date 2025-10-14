@@ -2,9 +2,9 @@ package com.example.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.controllers.queuecontroller;
 
 import com.example.App;
+import com.example.controllers.queuecontroller;
 import com.example.services.MediaPlayerService;
 
 import javafx.animation.KeyFrame;
@@ -13,6 +13,7 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
@@ -29,6 +30,7 @@ public class MediaPlayerHandler {
     private Button previousButton;
     private Button playPauseButton;
     private Button nextButton;
+    private ImageView currentSongImage;
 
     private queuecontroller queueController;
 
@@ -72,7 +74,7 @@ public class MediaPlayerHandler {
 
 
     public void registerUIComponents(HBox mediaPlayerBar, Label currentSongLabel, Label currentArtistLabel, Label currentTimeLabel, Label durationLabel,
-                                   ProgressBar progressBar, Button previousButton, Button playPauseButton, Button nextButton) {
+                                   ProgressBar progressBar, Button previousButton, Button playPauseButton, Button nextButton, ImageView currentSongImage) {
         this.mediaPlayerBar = mediaPlayerBar;
         this.currentSongLabel = currentSongLabel;
         this.currentArtistLabel = currentArtistLabel;
@@ -82,6 +84,7 @@ public class MediaPlayerHandler {
         this.previousButton = previousButton;
         this.playPauseButton = playPauseButton;
         this.nextButton = nextButton;
+        this.currentSongImage = currentSongImage;
 
         if (progressBar != null) {
             progressBar.setOnMouseClicked(event -> {
@@ -155,6 +158,23 @@ public class MediaPlayerHandler {
                 if (durationLabel != null) {
                     durationLabel.setText(service.getTotalDurationFormatted());
                 }
+                if (currentSongImage != null) {
+                    String imagePath = service.getCurrentSong().getImagePath();
+                    if (imagePath == null) {
+                        imagePath = "/com/example/images/vector-picture-icon.jpg";
+                    }
+                    try {
+                        java.net.URL url = getClass().getResource(imagePath);
+                        if (url != null) {
+                            currentSongImage.setImage(new javafx.scene.image.Image(url.toExternalForm()));
+                        } else {
+                            System.out.println("Image resource not found: " + imagePath);
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Exception while loading image: " + imagePath);
+                        e.printStackTrace();
+                    }
+                }
 
             } else {
                 if (currentSongLabel != null) {
@@ -183,6 +203,9 @@ public class MediaPlayerHandler {
                 }
                 if (durationLabel != null) {
                     durationLabel.setText("0:00");
+                }
+                if (currentSongImage != null) {
+                    currentSongImage.setImage(null);
                 }
             }
         }

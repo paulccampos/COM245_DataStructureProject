@@ -2,12 +2,9 @@ package com.example.controllers;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.bson.Document;
 
@@ -29,7 +26,6 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -62,11 +58,6 @@ public class playlistcontroller {
 
     @FXML
     private Button optionsButton;
-
-    @FXML
-    private VBox coverBox;
-
-
 
     private static String pendingPlaylistName;
     private static String pendingPreviousView;
@@ -140,56 +131,7 @@ public class playlistcontroller {
                 playlistDescriptionLabel.setText(description != null ? description : "");
             }
 
-            if (coverBox != null) {
-                String username = App.getCurrentUsername();
-                List<Document> songs = mongoService.getSongsForPlaylist(playlistName, username);
-                Map<String, Integer> albumPlays = new HashMap<>();
-                Map<String, String> albumImage = new HashMap<>();
-                for (Document song : songs) {
-                    String album = song.getString("album");
-                    int play = song.getInteger("play_count", 0);
-                    albumPlays.put(album, albumPlays.getOrDefault(album, 0) + play);
-                    if (!albumImage.containsKey(album)) {
-                        albumImage.put(album, song.getString("imagePath"));
-                    }
-                }
-                List<String> albumList = albumPlays.entrySet().stream()
-                    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                    .map(e -> e.getKey())
-                    .collect(Collectors.toList());
-                int num = Math.min(4, albumList.size());
-                coverBox.getChildren().clear();
-                GridPane grid = new GridPane();
-                grid.setHgap(5);
-                grid.setVgap(5);
-                for (int i = 0; i < num; i++) {
-                    String album = albumList.get(i);
-                    ImageView iv = new ImageView();
-                    iv.setFitWidth(70);
-                    iv.setFitHeight(70);
-                    String path = albumImage.get(album);
-                    if (path != null && path.startsWith("/Albums")) {
-                        path = "/com/example" + path;
-                    }
-                    if (path == null) {
-                        path = "/com/example/images/vector-picture-icon.jpg";
-                    }
-                    try {
-                        java.net.URL url = getClass().getResource(path);
-                        if (url != null) {
-                            Image img = new Image(url.toExternalForm());
-                            iv.setImage(img);
-                            grid.add(iv, i % 2, i / 2);
-                        } else {
-                            System.out.println("Image resource not found: " + path);
-                        }
-                    } catch (Exception e) {
-                        System.err.println("Exception while loading image: " + path);
-                        e.printStackTrace();
-                    }
-                }
-                coverBox.getChildren().add(grid);
-            }
+
 
             ContextMenu contextMenu = new ContextMenu();
             if (isCreator) {
@@ -312,7 +254,7 @@ public class playlistcontroller {
             albumArt.setFitWidth(40);
             String imagePath = song.getString("imagePath");
             if (imagePath != null && imagePath.startsWith("/Albums")) {
-                imagePath = "/com/example" + imagePath;
+                imagePath = "/com/example/images" + imagePath;
             }
             if (imagePath == null) {
                 imagePath = "/com/example/images/vector-picture-icon.jpg";

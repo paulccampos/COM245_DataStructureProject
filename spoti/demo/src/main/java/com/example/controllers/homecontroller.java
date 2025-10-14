@@ -132,7 +132,7 @@ public class homecontroller {
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         box.setPrefHeight(200);
-        box.setPrefWidth(180); 
+        box.setPrefWidth(180);
         box.setSpacing(15);
         box.setStyle("-fx-background-radius: 15; -fx-padding: 20; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);");
 
