@@ -127,7 +127,7 @@ public class songscontroller {
             albumArt.setFitWidth(40);
             String imagePath = song.getString("imagePath");
             if (imagePath == null) {
-                imagePath = "/com/example/images/vector-picture-icon.jpg";
+                imagePath = "/com/example/images/default.png";
             }
             try {
                 java.net.URL url = getClass().getResource(imagePath);
@@ -245,7 +245,7 @@ public class songscontroller {
         if (selectedSongImage != null) {
             String imagePath = song.getString("imagePath");
             if (imagePath == null) {
-                imagePath = "/com/example/images/vector-picture-icon.jpg";
+                imagePath = "/com/example/images/default.png";
             }
             try {
                 java.net.URL url = getClass().getResource(imagePath);

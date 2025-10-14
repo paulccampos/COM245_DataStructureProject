@@ -119,7 +119,7 @@ public class librarycontroller {
         if (songs.isEmpty()) {
             ImageView cover = new ImageView();
             try {
-                cover.setImage(new Image(getClass().getResource("/com/example/images/vector-picture-icon.jpg").toExternalForm()));
+                cover.setImage(new Image(getClass().getResource("/com/example/images/default.png").toExternalForm()));
             } catch (Exception e) {
                 cover.setImage(null);
             }
@@ -135,7 +135,7 @@ public class librarycontroller {
                 iv.setFitHeight(90);
                 String path = songs.get(i).getString("imagePath");
                 if (path == null) {
-                    path = "/com/example/images/vector-picture-icon.jpg";
+                    path = "/com/example/images/default.png";
                 }
                 try {
                     java.net.URL url = getClass().getResource(path);

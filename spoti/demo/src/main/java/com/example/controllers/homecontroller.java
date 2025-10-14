@@ -142,7 +142,7 @@ public class homecontroller {
         iv.setPreserveRatio(true);
         iv.setStyle("-fx-background-radius: 10;");
         String imagePath = playlist.getString("imagePath");
-        if (imagePath == null) imagePath = "/com/example/images/vector-picture-icon.jpg";
+        if (imagePath == null) imagePath = "/com/example/images/default.png";
         java.net.URL url = getClass().getResource(imagePath);
         if (url != null) {
             iv.setImage(new Image(url.toExternalForm()));
@@ -180,7 +180,7 @@ public class homecontroller {
         iv.setPreserveRatio(true);
         iv.setStyle("-fx-background-radius: 10;");
         String imagePath = song.getString("imagePath");
-        if (imagePath == null) imagePath = "/com/example/images/vector-picture-icon.jpg";
+        if (imagePath == null) imagePath = "/com/example/images/default.png";
         java.net.URL url = getClass().getResource(imagePath);
         if (url != null) {
             iv.setImage(new Image(url.toExternalForm()));
@@ -215,7 +215,7 @@ public class homecontroller {
         if (selectedSongImage != null) {
             String imagePath = song.getString("imagePath");
             if (imagePath == null) {
-                imagePath = "/com/example/images/vector-picture-icon.jpg";
+                imagePath = "/com/example/images/default.png";
             }
             try {
                 java.net.URL url = getClass().getResource(imagePath);

@@ -1,7 +1,3 @@
-# TODO: Display Single Album Photo in Playlist View
-
-## Tasks
-
-- [ ] Edit playlist.fxml to replace VBox coverBox with ImageView playlistCoverImage
-- [ ] Update playlistcontroller.java setPlaylistDetails() to set a single representative album image (highest play count)
-- [ ] Test the changes for user and admin playlists
+- [ ] Remove incorrect prepend in playlistcontroller.java for /Albums paths
+- [ ] Add path correction in MediaPlayerHandler.java to fix /com/example/images/Albums to /Albums
+- [ ] Test the application to ensure images load correctly

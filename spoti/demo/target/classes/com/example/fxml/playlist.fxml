@@ -19,6 +19,11 @@
             <Button onAction="#onBack" text="Back" />
             <HBox alignment="CENTER_LEFT" spacing="20.0">
                <children>
+                  <VBox fx:id="topSongsVBox" spacing="5.0" style="-fx-padding: 10;">
+                     <children>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Top Played Songs" />
+                     </children>
+                  </VBox>
                   <VBox>
                      <children>
                         <Label fx:id="playlistNameLabel" style="-fx-font-size: 48px; -fx-font-weight: bold;" text="Playlist Name" />

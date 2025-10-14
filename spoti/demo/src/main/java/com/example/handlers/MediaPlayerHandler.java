@@ -160,8 +160,11 @@ public class MediaPlayerHandler {
                 }
                 if (currentSongImage != null) {
                     String imagePath = service.getCurrentSong().getImagePath();
-                    if (imagePath == null) {
-                        imagePath = "/com/example/images/vector-picture-icon.jpg";
+                    if (imagePath != null && imagePath.startsWith("/com/example/images/Albums")) {
+                        imagePath = imagePath.replace("/com/example/images/Albums", "/Albums");
+                    }
+            if (imagePath == null) {
+                        imagePath = "/com/example/images/default.png";
                     }
                     try {
                         java.net.URL url = getClass().getResource(imagePath);

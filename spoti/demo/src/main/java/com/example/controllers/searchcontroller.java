@@ -65,7 +65,7 @@ public class searchcontroller {
                     artist.setText(item.getString("artist"));
                     String imagePath = item.getString("imagePath");
                     if (imagePath == null) {
-                        imagePath = "/com/example/images/vector-picture-icon.jpg";
+                        imagePath = "/com/example/images/default.png";
                     }
                     try {
                         java.net.URL url = getClass().getResource(imagePath);
@@ -103,7 +103,7 @@ public class searchcontroller {
         if (selectedSongImage != null) {
             String imagePath = selected.getString("imagePath");
             if (imagePath == null) {
-                imagePath = "/com/example/images/vector-picture-icon.jpg";
+                imagePath = "/com/example/images/default.png";
             }
             try {
                 java.net.URL url = getClass().getResource(imagePath);

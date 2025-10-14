@@ -26,6 +26,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -46,6 +47,9 @@ public class playlistcontroller {
 
     @FXML
     private VBox songsVBox;
+
+    @FXML
+    private VBox topSongsVBox;
 
     @FXML
     private ComboBox<String> sortComboBox;
@@ -131,7 +135,8 @@ public class playlistcontroller {
                 playlistDescriptionLabel.setText(description != null ? description : "");
             }
 
-
+            // Load top 4 most played songs
+            loadTopSongs();
 
             ContextMenu contextMenu = new ContextMenu();
             if (isCreator) {
@@ -253,11 +258,8 @@ public class playlistcontroller {
             albumArt.setFitHeight(40);
             albumArt.setFitWidth(40);
             String imagePath = song.getString("imagePath");
-            if (imagePath != null && imagePath.startsWith("/Albums")) {
-                imagePath = "/com/example/images" + imagePath;
-            }
             if (imagePath == null) {
-                imagePath = "/com/example/images/vector-picture-icon.jpg";
+                imagePath = "/com/example/images/default.png";
             }
             try {
                 java.net.URL url = getClass().getResource(imagePath);
@@ -552,6 +554,59 @@ public class playlistcontroller {
                 setPlaylistDetails();
             }
         });
+    }
+
+    private void loadTopSongs() {
+        if (topSongsVBox == null) return;
+
+        topSongsVBox.getChildren().clear();
+
+        String username = App.getCurrentUsername();
+        List<Document> songs = mongoService.getSongsForPlaylist(playlistName, username);
+
+        // Sort songs by play count (assuming playCount field exists, else use a default)
+        songs.sort((a, b) -> {
+            int playCountA = a.getInteger("playCount", 0);
+            int playCountB = b.getInteger("playCount", 0);
+            return Integer.compare(playCountB, playCountA); // Descending order
+        });
+
+        // Create a GridPane for the album art like in library
+        GridPane grid = new GridPane();
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setAlignment(javafx.geometry.Pos.CENTER);
+
+        int count = Math.min(4, songs.size());
+        for (int i = 0; i < count; i++) {
+            final int index = i;
+            ImageView iv = new ImageView();
+            iv.setFitWidth(60);
+            iv.setFitHeight(60);
+            String path = songs.get(i).getString("imagePath");
+            if (path != null && path.startsWith("/com/example/images/Albums")) {
+                path = path.replace("/com/example/images/Albums", "/Albums");
+            }
+            if (path == null) {
+                path = "/com/example/images/default.png";
+            }
+            try {
+                java.net.URL url = getClass().getResource(path);
+                if (url != null) {
+                    Image img = new Image(url.toExternalForm());
+                    iv.setImage(img);
+                } else {
+                    System.out.println("Image resource not found: " + path);
+                }
+            } catch (Exception e) {
+                System.err.println("Exception while loading image: " + path);
+                e.printStackTrace();
+            }
+            iv.setOnMouseClicked(e -> playSong(songs.get(index)));
+            grid.add(iv, i % 2, i / 2);
+        }
+
+        topSongsVBox.getChildren().add(grid);
     }
 
 }
