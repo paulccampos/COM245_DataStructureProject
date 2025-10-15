@@ -90,12 +90,16 @@ public class AdminController implements Initializable {
         headerBox.setStyle("-fx-padding: 5; -fx-border-color: -spawtify-subtle-text-color; -fx-border-width: 0 0 1 0;");
         Label userHeader = new Label("Username");
         userHeader.setPrefWidth(150);
+        userHeader.setStyle("-fx-text-fill: #ffffff;");
         Label emailHeader = new Label("Email");
         emailHeader.setPrefWidth(200);
+        emailHeader.setStyle("-fx-text-fill: #ffffff;");
         Label statusHeader = new Label("Status");
         statusHeader.setPrefWidth(100);
+        statusHeader.setStyle("-fx-text-fill: #ffffff;");
         Label createdHeader = new Label("Date Added");
         createdHeader.setPrefWidth(150);
+        createdHeader.setStyle("-fx-text-fill: #ffffff;");
         headerBox.getChildren().addAll(userHeader, emailHeader, statusHeader, createdHeader);
         usersVBox.getChildren().add(headerBox);
 
@@ -108,7 +112,7 @@ public class AdminController implements Initializable {
 
     private javafx.scene.layout.HBox createUserBox(User user) {
         javafx.scene.layout.HBox hbox = new javafx.scene.layout.HBox(10);
-        hbox.setStyle("-fx-padding: 8; -fx-cursor: hand;");
+        hbox.setStyle("-fx-padding: 8; -fx-cursor: hand; -fx-background-color: #073274; -fx-background-radius: 5;");
         hbox.setOnMouseClicked(e -> {
             selectedUserField.setText(user.getUsername());
             usernameEditField.setText(user.getUsername());
@@ -119,15 +123,19 @@ public class AdminController implements Initializable {
 
         Label usernameLabel = new Label(user.getUsername());
         usernameLabel.setPrefWidth(150);
+        usernameLabel.setStyle("-fx-text-fill: #ffffff;");
         Label emailLabel = new Label(user.getEmail());
         emailLabel.setPrefWidth(200);
+        emailLabel.setStyle("-fx-text-fill: #ffffff;");
         Label statusLabel = new Label(user.getStatus());
         statusLabel.setPrefWidth(100);
+        statusLabel.setStyle("-fx-text-fill: #ffffff;");
 
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
         String createdAt = user.getCreatedAt() != null ? sdf.format(user.getCreatedAt()) : "N/A";
         Label createdAtLabel = new Label(createdAt);
         createdAtLabel.setPrefWidth(150);
+        createdAtLabel.setStyle("-fx-text-fill: #ffffff;");
 
         hbox.getChildren().addAll(usernameLabel, emailLabel, statusLabel, createdAtLabel);
         return hbox;

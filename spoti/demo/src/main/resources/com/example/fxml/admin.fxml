@@ -11,13 +11,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="admin-panel" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="admin-panel" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.AdminController">
    <children>
       <VBox layoutX="14.0" layoutY="14.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="20.0">
                <children>
-                  <Label text="Admin Dashboard" styleClass="header-label">
+                  <Label style="-fx-text-fill: #ffffffff;" text="Admin Dashboard" styleClass="header-label">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -31,9 +31,9 @@
             </HBox>
             <HBox spacing="10.0">
                <children>
-                  <Label text="Filter by Status:" />
+                  <Label style="-fx-text-fill: #ffffff;" text="Filter by Status:" />
                   <ComboBox fx:id="statusFilterComboBox" prefWidth="150.0" />
-                  <Label text="Sort by:" />
+                  <Label style="-fx-text-fill: #ffffff;" text="Sort by:" />
                   <ComboBox fx:id="sortComboBox" prefWidth="150.0" />
                </children>
             </HBox>
@@ -44,36 +44,36 @@
             </ScrollPane>
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
-                  <Label text="Selected User:" />
+                  <Label style="-fx-text-fill: #ffffffff;" text="Selected User:" />
                   <TextField fx:id="selectedUserField" editable="false" prefWidth="200.0" />
                </children>
             </HBox>
             <VBox spacing="5.0" styleClass="form-box">
                <children>
-                  <Label text="Edit User Details" styleClass="sub-header-label" />
+                  <Label style="-fx-text-fill: #ffffffff;" text="Edit User Details" styleClass="sub-header-label" />
                   <HBox spacing="10.0">
                      <children>
                         <VBox>
                            <children>
-                              <Label text="Username" />
+                              <Label style="-fx-text-fill: #ffffffff;" text="Username" />
                               <TextField fx:id="usernameEditField" />
                            </children>
                         </VBox>
                         <VBox>
                            <children>
-                              <Label text="Email" />
+                              <Label style="-fx-text-fill: #ffffffff;" text="Email" />
                               <TextField fx:id="emailEditField" />
                            </children>
                         </VBox>
                         <VBox>
                            <children>
-                              <Label text="Status (admin/user)" />
+                              <Label style="-fx-text-fill: #ffffffff;" text="Status (admin/user)" />
                               <TextField fx:id="statusEditField" />
                            </children>
                         </VBox>
                         <VBox>
                            <children>
-                              <Label text="Password" />
+                              <Label style="-fx-text-fill: #ffffffff;" text="Password" />
                               <TextField fx:id="passwordEditField" />
                            </children>
                         </VBox>

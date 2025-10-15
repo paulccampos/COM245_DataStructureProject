@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20.0" styleClass="main-content" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.songscontroller">
+<VBox spacing="20.0" styleClass="main-content" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.songscontroller">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <Label style="-fx-font-size: 40px; -fx-font-weight: bold;" text="All Songs" />
+      <Label style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="All Songs" />
       <HBox alignment="CENTER_LEFT" spacing="20.0">
          <children>
             <ComboBox fx:id="sortComboBox" promptText="Sort by..." />
@@ -28,9 +28,9 @@
          </children>
       </HBox>
 
-      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);">
          <content>
-            <VBox fx:id="songsVBox" spacing="5.0" />
+            <VBox fx:id="songsVBox" spacing="5.0" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" />
          </content>
       </ScrollPane>
    </children>

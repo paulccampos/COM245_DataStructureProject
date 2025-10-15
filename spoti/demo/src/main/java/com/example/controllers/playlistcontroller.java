@@ -35,6 +35,8 @@ public class playlistcontroller {
     private MongoService mongoService;
     private String playlistName;
     private String previousView;
+    private boolean isCreator;
+    private String createdBy;
 
     @FXML
     private Label playlistNameLabel;
@@ -118,9 +120,9 @@ public class playlistcontroller {
     private void setPlaylistDetails() {
         Document playlist = mongoService.getPlaylist(playlistName, App.getCurrentUsername());
         if (playlist != null && optionsButton != null) {
-            String createdBy = playlist.getString("createdBy");
+            createdBy = playlist.getString("createdBy");
             String currentUsername = App.getCurrentUsername();
-            boolean isCreator = currentUsername.equals(createdBy);
+            isCreator = currentUsername.equals(createdBy);
             boolean isLiked = mongoService.getLikedPlaylistTitles(currentUsername).contains(playlistName);
 
             String name = playlist.getString("title");
@@ -139,7 +141,7 @@ public class playlistcontroller {
             loadTopSongs();
 
             ContextMenu contextMenu = new ContextMenu();
-            if (isCreator) {
+            if (isCreator && !createdBy.equals("admin")) {  // Hide delete for admin-created playlists
                 MenuItem deleteItem = new MenuItem("Delete Playlist");
                 deleteItem.setOnAction(e -> onDeletePlaylist());
                 contextMenu.getItems().add(deleteItem);
@@ -205,6 +207,7 @@ public class playlistcontroller {
             radixSort(songs);
         }
         songsVBox.getChildren().clear();
+        songsVBox.setStyle("-fx-background-color: #0b52bf;");
 
         int totalDurationSeconds = 0;
         for (Document song : songs) {
@@ -216,24 +219,19 @@ public class playlistcontroller {
         totalDurationLabel.setStyle("-fx-font-weight: bold; -fx-padding: 5 0 5 0; -fx-text-fill: -spawtify-subtle-text-color;");
         songsVBox.getChildren().add(totalDurationLabel);
 
-        HBox headerBox = new HBox(10);
+        HBox headerBox = new HBox(20);
         Label imageHeader = new Label();
         imageHeader.setPrefWidth(40);
         Label titleHeader = new Label("Title");
-        titleHeader.setPrefWidth(150);
+        titleHeader.setPrefWidth(200);
+        titleHeader.setStyle("-fx-text-fill: white;");
         Label artistHeader = new Label("Artist");
-        artistHeader.setPrefWidth(120);
+        artistHeader.setPrefWidth(150);
+        artistHeader.setStyle("-fx-text-fill: white;");
         Label albumHeader = new Label("Album");
-        albumHeader.setPrefWidth(120);
-        Label fileHeader = new Label("File");
-        fileHeader.setPrefWidth(200);
-        Label durationHeader = new Label("Duration");
-        durationHeader.setPrefWidth(100);
-        Label actionsHeader = new Label("Actions");
-        actionsHeader.setPrefWidth(250);
-        Label favoriteHeader = new Label("Favorite");
-        favoriteHeader.setPrefWidth(80);
-        headerBox.getChildren().addAll(imageHeader, titleHeader, artistHeader, albumHeader, fileHeader, durationHeader, favoriteHeader, actionsHeader);
+        albumHeader.setPrefWidth(150);
+        albumHeader.setStyle("-fx-text-fill: white;");
+        headerBox.getChildren().addAll(imageHeader, titleHeader, artistHeader, albumHeader);
         songsVBox.getChildren().add(headerBox);
 
         for (Document song : songs) {
@@ -251,7 +249,7 @@ public class playlistcontroller {
                 duration = "3:45"; // Default duration
             }
 
-            HBox songBox = new HBox(10);
+            HBox songBox = new HBox(20);
             songBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
             ImageView albumArt = new ImageView();
@@ -274,35 +272,40 @@ public class playlistcontroller {
             }
 
             Label titleLabel = new Label(title);
-            titleLabel.setPrefWidth(150);
+            titleLabel.setPrefWidth(200);
+            titleLabel.setStyle("-fx-text-fill: white;");
             Label artistLabel = new Label(artist);
-            artistLabel.setPrefWidth(120);
+            artistLabel.setPrefWidth(150);
+            artistLabel.setStyle("-fx-text-fill: white;");
             Label albumLabel = new Label(album);
-            albumLabel.setPrefWidth(120);
-            String file = song.getString("file");
-            if (file == null) {
-                file = "";
-            }
-            Label fileLabel = new Label(file);
-            fileLabel.setPrefWidth(200);
-            Label durationLabel = new Label(duration);
-            durationLabel.setPrefWidth(100);
+            albumLabel.setPrefWidth(150);
+            albumLabel.setStyle("-fx-text-fill: white;");
 
-            javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
-            javafx.scene.layout.HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
-
-            songBox.setOnMouseClicked(e -> playSong(song));
+            songBox.setOnMouseClicked(e -> {
+                if (e.getButton() == javafx.scene.input.MouseButton.PRIMARY) {
+                    playSong(song);
+                }
+            });
 
             ContextMenu contextMenu = new ContextMenu();
             MenuItem addToPlaylistItem = new MenuItem("Add to Playlist");
             addToPlaylistItem.setOnAction(e -> addSongToPlaylist(song));
             MenuItem addToQueueItem = new MenuItem("Add to Queue");
             addToQueueItem.setOnAction(e -> addSongToQueue(song));
-            MenuItem deleteFromPlaylistItem = new MenuItem("Delete from Playlist");
-            deleteFromPlaylistItem.setOnAction(e -> deleteSongFromPlaylist(song));
-            contextMenu.getItems().addAll(addToPlaylistItem, addToQueueItem, deleteFromPlaylistItem);
+            contextMenu.getItems().addAll(addToPlaylistItem, addToQueueItem);
+            if (isCreator) {
+                MenuItem deleteFromPlaylistItem = new MenuItem("Delete from Playlist");
+                deleteFromPlaylistItem.setOnAction(e -> deleteSongFromPlaylist(song));
+                contextMenu.getItems().add(deleteFromPlaylistItem);
+            }
+
+            songBox.setOnContextMenuRequested(e -> contextMenu.show(songBox, e.getScreenX(), e.getScreenY()));
+
+            javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
+            javafx.scene.layout.HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
             Button menuButton = new Button("...");
+            menuButton.getStyleClass().add("playlist-button");
             menuButton.setOnMouseClicked((MouseEvent e) -> {
                 if (!contextMenu.isShowing()) {
                     contextMenu.show(menuButton, e.getScreenX(), e.getScreenY());
@@ -311,18 +314,7 @@ public class playlistcontroller {
                 }
             });
 
-            javafx.scene.layout.Region postNudge = new javafx.scene.layout.Region();
-            postNudge.setPrefWidth(20);
-
-            Label favoriteLabel = new Label();
-            favoriteLabel.setPrefWidth(80);
-            if (title.length() % 2 == 0) {
-                favoriteLabel.setText("★");
-            } else {
-                favoriteLabel.setText("");
-            }
-
-            songBox.getChildren().addAll(albumArt, titleLabel, artistLabel, albumLabel, fileLabel, durationLabel, favoriteLabel, spacer, menuButton, postNudge);
+            songBox.getChildren().addAll(albumArt, titleLabel, artistLabel, albumLabel, spacer, menuButton);
             songsVBox.getChildren().add(songBox);
         }
     }

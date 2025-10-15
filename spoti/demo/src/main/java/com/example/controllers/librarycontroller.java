@@ -163,10 +163,10 @@ public class librarycontroller {
         }
 
         Label titleLabel = new Label(title);
-        titleLabel.setStyle("-fx-font-weight: 500; -fx-font-size: 15px;");
+        titleLabel.setStyle("-fx-font-weight: 500; -fx-font-size: 15px; -fx-text-fill: #ffffff;");
 
         Label subtitleLabel = new Label(desc);
-        subtitleLabel.setStyle("-fx-font-size: 13px;");
+        subtitleLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #ffffff;");
 
         VBox textContainer = new VBox(5, titleLabel, subtitleLabel);
         textContainer.setAlignment(Pos.CENTER);

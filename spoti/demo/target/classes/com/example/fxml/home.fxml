@@ -7,43 +7,42 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- This is now just the content for the center pane -->
-<ScrollPane fitToWidth="true" fitToHeight="true" styleClass="main-content" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.homecontroller">
+<ScrollPane fitToWidth="true" fitToHeight="true" styleClass="main-content" stylesheets="@../home.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.homecontroller">
    <content>
-      <VBox spacing="10.0">
+      <VBox spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);">
          <children>            
             <VBox spacing="20.0" styleClass="greeting">
                <children>
-                  <Label fx:id="welcomeLabel" text="Pagbati Pashnea" style="-fx-font-size: 40px;" />
-                  <ImageView fx:id="selectedSongImage" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" />
+                  <Label fx:id="welcomeLabel" text="Pagbati Pashnea" style="-fx-font-size: 40px; -fx-text-fill: #ffffff;" />
                </children>
             </VBox>
             <VBox spacing="15.0" styleClass="made-for-you">
                <children>
-                  <Label text="Made For You" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                  <Label text="Made For You" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" />
                   <HBox fx:id="madeForYouVBox" spacing="20.0" styleClass="row" />
                </children>
             </VBox>
             <VBox spacing="15.0" styleClass="your-playlists">
                <children>
-                  <Label text="Your Playlists" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                  <Label text="Your Playlists" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" />
                   <HBox fx:id="yourPlaylistsVBox" spacing="20.0" styleClass="row" />
                </children>
             </VBox>
             <VBox spacing="15.0" styleClass="top-played">
                <children>
-                  <Label text="Top Played" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                  <Label text="Top Played" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" />
                   <HBox fx:id="topPlayedVBox" spacing="20.0" styleClass="row" />
                </children>
             </VBox>
             <VBox spacing="15.0" styleClass="recommendations">
                <children>
-                  <Label text="You might like these" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                  <Label text="You might like these" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" />
                   <HBox fx:id="recommendationsVBox" spacing="20.0" styleClass="row" />
                </children>
             </VBox>
             <VBox spacing="15.0" styleClass="try-something-new">
                <children>
-                  <Label text="Try something new" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                  <Label text="Try something new" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" />
                   <HBox fx:id="trySomethingNewVBox" spacing="20.0" styleClass="row" />
                </children>
             </VBox>

@@ -1,0 +1,67 @@
+/* Home CSS - Adapted from HTML dark blue theme */
+
+:root {
+    -dark-blue: #0A111F;
+    -side-nav-blue: #052659;
+    -text-color: #ffffff;
+    -light-text: #ffffff;
+    -accent-green: #ffffff;
+    -search-bg: #252577;
+    -hover-bg: #283750;
+    -header-bg: #152033;
+}
+
+.main-content {
+    -fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);
+    -fx-text-fill: -text-color;
+}
+
+.greeting .label {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.made-for-you .label, .your-playlists .label, .top-played .label, .recommendations .label, .try-something-new .label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.row {
+    -fx-spacing: 20px;
+    -fx-padding: 0 0 12px 0;
+}
+
+.square {
+    -fx-pref-width: 192px;
+    -fx-pref-height: 212px;
+    -fx-background-color: #102140;
+    -fx-padding: 15px;
+    -fx-border-radius: 5px;
+    -fx-text-alignment: center;
+}
+
+.square:hover {
+    -fx-background-color: -hover-bg;
+}
+
+.square .label {
+    -fx-font-size: 0.9em;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.button {
+    -fx-background-color: #739EC9;
+    -fx-text-fill: -text-color;
+    -fx-border-radius: 4px;
+}
+
+.button:hover {
+    -fx-background-color: -hover-bg;
+}
+
+.label {
+    -fx-text-fill: -text-color;
+}

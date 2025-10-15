@@ -1,0 +1,89 @@
+/* User Profile CSS - Adapted from HTML dark blue theme */
+
+:root {
+    -dark-blue: #0A111F;
+    -side-nav-blue: #052659;
+    -text-color: #ffffff;
+    -light-text: #ffffff;
+    -accent-green: #ffffff;
+    -search-bg: #252577;
+    -hover-bg: #283750;
+    -header-bg: #152033;
+    -border-color: #3660a8;
+}
+
+.root {
+    -fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);
+    -fx-text-fill: -text-color;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.vbox {
+    -fx-padding: 20px;
+    -fx-spacing: 30px;
+}
+
+.button {
+    -fx-background-color: #739EC9;
+    -fx-text-fill: -text-color;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 4px;
+}
+
+.button:hover {
+    -fx-background-color: -hover-bg;
+}
+
+.button#logout {
+    -fx-background-color: rgba(11, 82, 191, 0.7);
+    -fx-text-fill: white;
+    -fx-pref-width: 200px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.button#logout:hover {
+    -fx-background-color: #ff6b6b;
+    -fx-text-fill: white;
+}
+
+.label {
+    -fx-text-fill: -text-color;
+}
+
+.label.title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.label.section-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.vbox.section {
+    -fx-border-color: -border-color;
+    -fx-border-radius: 5px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+    -fx-background-color: rgba(16, 33, 64, 0.8);
+}
+
+.hbox {
+    -fx-spacing: 10px;
+}
+
+.password-field {
+    -fx-background-color: -search-bg;
+    -fx-text-fill: -text-color;
+    -fx-prompt-text-fill: -light-text;
+    -fx-border-radius: 4px;
+    -fx-padding: 8px;
+}

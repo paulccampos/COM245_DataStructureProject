@@ -65,8 +65,11 @@ public class ProfileController implements Initializable {
                     String status = user.getString("status") != null ? user.getString("status") : "No data available";
 
                     usernameLabel.setText(username);
+                    usernameLabel.setStyle("-fx-text-fill: #ffffff;");
                     emailLabel.setText(email);
+                    emailLabel.setStyle("-fx-text-fill: #ffffff;");
                     statusLabel.setText(status);
+                    statusLabel.setStyle("-fx-text-fill: #ffffff;");
 
                     Object createdDate = user.get("created_date");
                     if (createdDate instanceof java.util.Date) {
@@ -75,6 +78,7 @@ public class ProfileController implements Initializable {
                     } else {
                         memberSinceLabel.setText("Member since: Unknown");
                     }
+                    memberSinceLabel.setStyle("-fx-text-fill: #ffffff;");
 
                     Object updatedDate = user.get("updated_at");
                     if (updatedDate instanceof java.util.Date) {
@@ -83,6 +87,7 @@ public class ProfileController implements Initializable {
                     } else {
                         lastUpdatedLabel.setText("Last updated: Never");
                     }
+                    lastUpdatedLabel.setStyle("-fx-text-fill: #ffffff;");
                 } else {
                     usernameLabel.setText("No data available");
                     emailLabel.setText("No data available");
@@ -114,23 +119,30 @@ public class ProfileController implements Initializable {
                 List<String> topGenres = mongoService.getTopGenresForUser(currentUsername, 3);
                 if (topGenres.size() > 0) {
                     genre1Label.setText("1. " + topGenres.get(0));
+                    genre1Label.setStyle("-fx-text-fill: #ffffff;");
                 } else {
                     genre1Label.setText("1. No data available");
+                    genre1Label.setStyle("-fx-text-fill: #ffffff;");
                 }
                 if (topGenres.size() > 1) {
                     genre2Label.setText("2. " + topGenres.get(1));
+                    genre2Label.setStyle("-fx-text-fill: #ffffff;");
                 } else {
                     genre2Label.setText("2. -");
+                    genre2Label.setStyle("-fx-text-fill: #ffffff;");
                 }
                 if (topGenres.size() > 2) {
                     genre3Label.setText("3. " + topGenres.get(2));
+                    genre3Label.setStyle("-fx-text-fill: #ffffff;");
                 } else {
                     genre3Label.setText("3. -");
+                    genre3Label.setStyle("-fx-text-fill: #ffffff;");
                 }
             }
         } catch (Exception e) {
             System.err.println("Error loading top genres: " + e.getMessage());
             genre1Label.setText("1. Error loading data");
+            genre1Label.setStyle("-fx-text-fill: #ffffff;");
             genre2Label.setText("2. -");
             genre3Label.setText("3. -");
         }

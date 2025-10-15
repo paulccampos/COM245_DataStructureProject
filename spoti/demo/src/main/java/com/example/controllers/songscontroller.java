@@ -161,6 +161,7 @@ public class songscontroller {
             contextMenu.getItems().addAll(addToPlaylistItem, addToQueueItem);
 
             Button menuButton = new Button("...");
+            menuButton.getStyleClass().add("playlist-button");
             menuButton.setOnMouseClicked((MouseEvent e) -> {
                 if (!contextMenu.isShowing()) {
                     contextMenu.show(menuButton, e.getScreenX(), e.getScreenY());

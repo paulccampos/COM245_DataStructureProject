@@ -7,12 +7,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20.0" styleClass="main-content" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.searchcontroller">
+<VBox spacing="20.0" styleClass="main-content" stylesheets="@../search.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.searchcontroller">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <Label style="-fx-font-size: 40px; -fx-font-weight: bold;" text="Search" />
+      <Label style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Search" />
       <TextField fx:id="searchTextField" promptText="What do you want to listen to?" style="-fx-font-size: 18px;" />
 
       <ListView fx:id="resultsListView" VBox.vgrow="ALWAYS" />

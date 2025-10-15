@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.playlistcontroller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" styleClass="root" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.playlistcontroller">
    <top>
       <VBox spacing="10.0" style="-fx-padding: 20;">
          <children>
@@ -26,8 +26,8 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label fx:id="playlistNameLabel" style="-fx-font-size: 48px; -fx-font-weight: bold;" text="Playlist Name" />
-                        <Label fx:id="playlistDescriptionLabel" text="Playlist description..." />
+                        <Label fx:id="playlistNameLabel" style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Playlist Name" />
+                        <Label fx:id="playlistDescriptionLabel" style="-fx-text-fill: #ffffff;" text="Playlist description..." />
                      </children>
                   </VBox>
 
@@ -41,14 +41,14 @@
          <children>
             <HBox alignment="CENTER_LEFT" spacing="20.0">
                <children>
-                  <Button fx:id="shuffleButton" onAction="#onShuffle" text="Shuffle" />
+                  <Button fx:id="shuffleButton" onAction="#onShuffle" text="Shuffle" styleClass="playlist-button" />
                   <TextField fx:id="searchTextField" promptText="Filter songs..." HBox.hgrow="ALWAYS" />
                   <ComboBox fx:id="sortComboBox" promptText="Sort by..." />
                   <!-- This is the new options button -->
-                  <Button fx:id="optionsButton" text="..." style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                  <Button fx:id="optionsButton" text="..." style="-fx-font-size: 16px; -fx-font-weight: bold;" styleClass="playlist-button" />
                </children>
             </HBox>
-            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" style="-fx-background-color: #0b52bf;" VBox.vgrow="ALWAYS">
                <content>
                   <VBox fx:id="songsVBox" spacing="5.0" />
                </content>

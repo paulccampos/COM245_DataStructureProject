@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20.0" styleClass="main-content" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.librarycontroller">
+<VBox spacing="20.0" styleClass="main-content" stylesheets="@../library.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.librarycontroller">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <Label style="-fx-font-size: 40px; -fx-font-weight: bold;" text="Your Library" />
+      <Label style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Your Library" />
       <HBox alignment="CENTER_LEFT" spacing="20.0">
          <children>
             <Button onAction="#onCreatePlaylist" text="Create Playlist" />

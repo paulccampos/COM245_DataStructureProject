@@ -9,29 +9,29 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: #eaf6ff;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.LoginController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.LoginController">
    <padding>
       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
    </padding>
    <children>
-      <Label style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #0056b3;" text="SPAWITFY" />
+      <Label style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #ffffffff;" text="SPAWITFY" />
       <VBox spacing="5.0">
          <children>
-            <Label text="Username" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Username" />
             <TextField fx:id="usernameField" promptText="Enter your username" />
          </children>
       </VBox>
       <VBox spacing="5.0">
          <children>
-            <Label text="Password" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Password" />
             <PasswordField fx:id="passwordField" promptText="Enter your password" />
          </children>
       </VBox>
-      <CheckBox fx:id="rememberMeCheckBox" text="Remember Me" />
+      <CheckBox fx:id="rememberMeCheckBox" style="-fx-text-fill: #ffffff;" text="Remember Me" />
       <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="200.0" text="Log In" />
       <VBox alignment="CENTER" spacing="5.0">
          <children>
-            <Label text="Don't have an account?" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Don't have an account?" />
             <Hyperlink fx:id="signUpLink" onAction="#handleSignUp" text="Sign up for Spawtify" />
          </children>
       </VBox>

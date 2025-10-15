@@ -9,27 +9,27 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="15.0" style="-fx-background-color: #eaf6ff;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.SignUpController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.SignUpController">
    <padding>
       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
    </padding>
    <children>
-      <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0056b3;" text="Create Account" />
+      <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ffffffff;" text="Create Account" />
       <VBox spacing="5.0">
          <children>
-            <Label text="Username" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Username" />
             <TextField fx:id="usernameField" promptText="Enter your username" />
          </children>
       </VBox>
       <VBox spacing="5.0">
          <children>
-            <Label text="Email" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Email" />
             <TextField fx:id="emailField" promptText="Enter your email" />
          </children>
       </VBox>
       <VBox spacing="5.0">
          <children>
-            <Label text="Password" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Password" />
             <PasswordField fx:id="passwordField" promptText="Create a password" />
             <ProgressBar fx:id="passwordStrengthBar" prefWidth="200.0" progress="0.0" />
             <Label fx:id="passwordStrengthLabel" />
@@ -37,7 +37,7 @@
       </VBox>
       <VBox spacing="5.0">
          <children>
-            <Label text="Confirm Password" />
+            <Label style="-fx-text-fill: #ffffffff;" text="Confirm Password" />
             <PasswordField fx:id="confirmPasswordField" promptText="Confirm your password" />
          </children>
       </VBox>
