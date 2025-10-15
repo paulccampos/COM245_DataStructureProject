@@ -1,10 +1,8 @@
-# TODO: Add Show/Hide Password Checkboxes
+# TODO: Make main.fxml like Spotify
 
-## Tasks
-- [x] Update login.fxml to add CheckBox for password visibility
-- [x] Update signup.fxml to add CheckBox for password field only (not confirm)
-- [x] Update userprofile.fxml to add CheckBox for new password field and add strength bar/label
-- [x] Update LoginController.java to handle checkbox toggle for password field
-- [x] Update SignUpController.java to handle checkbox toggle for password field
-- [x] Update ProfileController.java to handle checkbox toggle for new password field and implement strength logic
-- [ ] Test the functionality in login, signup, and profile screens
+- [x] Add a top bar to the BorderPane with a search field and user profile section.
+- [x] Enhance the left sidebar to include a "Your Playlists" section with placeholder playlists.
+- [x] Test the layout changes (if applicable).
+- [x] Change the design of the progress bar.
+- [x] Change the design of the queue button.
+- [x] Replace the photo in the left side of the title (song image).
