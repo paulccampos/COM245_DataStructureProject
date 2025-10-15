@@ -24,14 +24,17 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 
 public class LoginController implements Initializable {
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+    @FXML private TextField passwordTextField;
     @FXML private Button loginButton;
     @FXML private Hyperlink signUpLink;
     @FXML private CheckBox rememberMeCheckBox;
+    @FXML private CheckBox showPasswordCheckBox;
 
     private MongoService mongoService;
     private static final String REMEMBER_FILE = "user_credentials.dat";
@@ -41,12 +44,13 @@ public class LoginController implements Initializable {
         mongoService = new MongoService();
         setupEnterKeyHandler();
         loadRememberedCredentials();
+        setupShowPasswordToggle();
     }
 
     @FXML
     private void handleLogin() {
         String username = usernameField.getText().trim();
-        String password = passwordField.getText();
+        String password = showPasswordCheckBox.isSelected() ? passwordTextField.getText() : passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
             return;
@@ -131,11 +135,21 @@ public class LoginController implements Initializable {
     private void setupEnterKeyHandler() {
         usernameField.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {
-                passwordField.requestFocus();
+                if (showPasswordCheckBox.isSelected()) {
+                    passwordTextField.requestFocus();
+                } else {
+                    passwordField.requestFocus();
+                }
             }
         });
 
         passwordField.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                handleLogin();
+            }
+        });
+
+        passwordTextField.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {
                 handleLogin();
             }
@@ -195,5 +209,26 @@ public class LoginController implements Initializable {
         } catch (Exception e) {
             System.err.println("Error clearing remembered credentials: " + e.getMessage());
         }
+    }
+
+    private void setupShowPasswordToggle() {
+        // Bind the text properties
+        passwordTextField.textProperty().bindBidirectional(passwordField.textProperty());
+
+        showPasswordCheckBox.setOnAction(event -> {
+            if (showPasswordCheckBox.isSelected()) {
+                passwordField.setVisible(false);
+                passwordField.setManaged(false);
+                passwordTextField.setVisible(true);
+                passwordTextField.setManaged(true);
+                passwordTextField.requestFocus();
+            } else {
+                passwordTextField.setVisible(false);
+                passwordTextField.setManaged(false);
+                passwordField.setVisible(true);
+                passwordField.setManaged(true);
+                passwordField.requestFocus();
+            }
+        });
     }
 }

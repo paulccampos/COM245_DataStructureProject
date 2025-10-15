@@ -9,6 +9,7 @@ import com.example.MongoService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
@@ -19,12 +20,14 @@ public class SignUpController implements Initializable {
     @FXML private TextField usernameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
+    @FXML private TextField passwordTextField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Button signUpButton;
     @FXML private Button backToLoginLink;
     @FXML private Button backButton;
     @FXML private ProgressBar passwordStrengthBar;
     @FXML private Label passwordStrengthLabel;
+    @FXML private CheckBox showPasswordCheckBox;
 
     private MongoService mongoService;
 
@@ -38,6 +41,7 @@ public class SignUpController implements Initializable {
         mongoService = new MongoService();
         setupPasswordStrengthListener();
         setupEnterKeyHandler();
+        setupShowPasswordToggle();
     }
 
     @FXML
@@ -308,6 +312,25 @@ public class SignUpController implements Initializable {
         });
     }
 
+    private void setupShowPasswordToggle() {
+        // Bind the text properties
+        passwordTextField.textProperty().bindBidirectional(passwordField.textProperty());
 
+        showPasswordCheckBox.setOnAction(event -> {
+            if (showPasswordCheckBox.isSelected()) {
+                passwordField.setVisible(false);
+                passwordField.setManaged(false);
+                passwordTextField.setVisible(true);
+                passwordTextField.setManaged(true);
+                passwordTextField.requestFocus();
+            } else {
+                passwordTextField.setVisible(false);
+                passwordTextField.setManaged(false);
+                passwordField.setVisible(true);
+                passwordField.setManaged(true);
+                passwordField.requestFocus();
+            }
+        });
+    }
 
 }

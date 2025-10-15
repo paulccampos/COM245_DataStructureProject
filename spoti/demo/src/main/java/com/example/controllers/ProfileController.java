@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 
@@ -13,8 +14,11 @@ import com.example.MongoService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 
 public class ProfileController implements Initializable {
 
@@ -40,6 +44,14 @@ public class ProfileController implements Initializable {
     @FXML
     private PasswordField newPasswordField;
     @FXML
+    private TextField newPasswordTextField;
+    @FXML
+    private CheckBox showNewPasswordCheckBox;
+    @FXML
+    private ProgressBar newPasswordStrengthBar;
+    @FXML
+    private Label newPasswordStrengthLabel;
+    @FXML
     private PasswordField confirmPasswordField;
 
     private MongoService mongoService;
@@ -52,6 +64,8 @@ public class ProfileController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadUserProfile();
         loadTopGenres();
+        setupShowPasswordToggle();
+        setupPasswordStrengthListener();
     }
 
     private void loadUserProfile() {
@@ -214,4 +228,184 @@ public class ProfileController implements Initializable {
             showAlert("Error", "Failed to log out.", Alert.AlertType.ERROR);
         }
     }
+
+    private void setupShowPasswordToggle() {
+        // Bind the text properties
+        newPasswordTextField.textProperty().bindBidirectional(newPasswordField.textProperty());
+
+        showNewPasswordCheckBox.setOnAction(event -> {
+            if (showNewPasswordCheckBox.isSelected()) {
+                newPasswordField.setVisible(false);
+                newPasswordField.setManaged(false);
+                newPasswordTextField.setVisible(true);
+                newPasswordTextField.setManaged(true);
+                newPasswordTextField.requestFocus();
+            } else {
+                newPasswordTextField.setVisible(false);
+                newPasswordTextField.setManaged(false);
+                newPasswordField.setVisible(true);
+                newPasswordField.setManaged(true);
+                newPasswordField.requestFocus();
+            }
+        });
+    }
+
+    private void setupPasswordStrengthListener() {
+        newPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updatePasswordStrength(newValue);
+        });
+    }
+
+    private void updatePasswordStrength(String password) {
+        if (password.isEmpty()) {
+            newPasswordStrengthBar.setProgress(0);
+            newPasswordStrengthLabel.setText("");
+            return;
+        }
+
+        int score = calculatePasswordScore(password);
+        String strengthText = "";
+        String barColor = "";
+
+        if (score <= 10) {
+            strengthText = "Very Weak";
+            barColor = "#ff6b6b";
+        } else if (score <= 20) {
+            strengthText = "Weak";
+            barColor = "#ff8a65";
+        } else if (score <= 30) {
+            strengthText = "Fair";
+            barColor = "#ffb74d";
+        } else if (score <= 40) {
+            strengthText = "Fairly Good";
+            barColor = "#ffeb3b";
+        } else if (score <= 50) {
+            strengthText = "Good";
+            barColor = "#cddc39";
+        } else if (score <= 60) {
+            strengthText = "Very Good";
+            barColor = "#8bc34a";
+        } else if (score <= 80) {
+            strengthText = "Strong";
+            barColor = "#4caf50";
+        } else {
+            strengthText = "Very Strong";
+            barColor = "#2e7d32";
+        }
+
+        newPasswordStrengthBar.setProgress(score / 100.0);
+        newPasswordStrengthLabel.setText(strengthText);
+        newPasswordStrengthLabel.setStyle("-fx-text-fill: " + barColor + ";");
+    }
+
+    private int calculatePasswordScore(String password) {
+        int score = 0;
+        int length = password.length();
+
+        if (length >= 25) {
+            score = 91;
+        } else if (length >= 20) {
+            score = 81;
+        } else if (length >= 16) {
+            score = 61;
+        } else if (length >= 14) {
+            score = 51;
+        } else if (length >= 12) {
+            score = 41;
+        } else if (length >= 10) {
+            score = 31;
+        } else if (length >= 8) {
+            score = 21;
+        } else if (length >= 6) {
+            score = 11;
+        } else {
+            score = 0;
+        }
+
+        if (length >= 25) {
+            score += Math.min((length - 24) * 2, 9);
+        } else if (length >= 20) {
+            score += (length - 19) * 2;
+        } else if (length >= 16) {
+            score += (length - 15) * 2;
+        } else if (length >= 14) {
+            score += (length - 13) * 2;
+        } else if (length >= 12) {
+            score += (length - 11) * 2;
+        } else if (length >= 10) {
+            score += (length - 9) * 2;
+        } else if (length >= 8) {
+            score += (length - 7) * 2;
+        } else if (length >= 6) {
+            score += (length - 5) * 2;
+        } else {
+            score += length * 2;
+        }
+
+        boolean hasLower = LOWERCASE_PATTERN.matcher(password).matches();
+        boolean hasUpper = UPPERCASE_PATTERN.matcher(password).matches();
+        boolean hasDigit = DIGIT_PATTERN.matcher(password).matches();
+        boolean hasSpecial = SPECIAL_CHAR_PATTERN.matcher(password).matches();
+
+        int types = 0;
+        if (hasLower) types++;
+        if (hasUpper) types++;
+        if (hasDigit) types++;
+        if (hasSpecial) types++;
+
+        if (types == 1) {
+        } else if (types == 2) {
+            score += 5;
+        } else if (types == 3) {
+            score += 10;
+        } else if (types == 4) {
+            score += 15;
+        }
+
+        if (hasSequentialChars(password)) score -= 5;
+        if (hasRepeatedChars(password)) score -= 5;
+        if (isCommonWord(password)) score -= 10;
+
+        if (hasLower && hasUpper) score += 5;
+
+        return Math.max(0, Math.min(score, 100));
+    }
+
+    private boolean isCommonWord(String password) {
+        String[] commonWords = {"password", "123456", "qwerty", "abc123", "letmein", "welcome", "admin", "user", "guest"};
+        String lowerPass = password.toLowerCase();
+        for (String word : commonWords) {
+            if (lowerPass.contains(word)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasSequentialChars(String password) {
+        for (int i = 0; i < password.length() - 2; i++) {
+            char a = password.charAt(i);
+            char b = password.charAt(i + 1);
+            char c = password.charAt(i + 2);
+            if ((b == a + 1 && c == b + 1) || (b == a - 1 && c == b - 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasRepeatedChars(String password) {
+        for (int i = 0; i < password.length() - 2; i++) {
+            if (password.charAt(i) == password.charAt(i + 1) &&
+                password.charAt(i + 1) == password.charAt(i + 2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static final Pattern LOWERCASE_PATTERN = Pattern.compile(".*[a-z].*");
+    private static final Pattern UPPERCASE_PATTERN = Pattern.compile(".*[A-Z].*");
+    private static final Pattern DIGIT_PATTERN = Pattern.compile(".*[0-9].*");
+    private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*");
 }

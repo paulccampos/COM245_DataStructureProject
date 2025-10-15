@@ -2,11 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.SignUpController">
@@ -30,7 +32,13 @@
       <VBox spacing="5.0">
          <children>
             <Label style="-fx-text-fill: #ffffffff;" text="Password" />
-            <PasswordField fx:id="passwordField" promptText="Create a password" />
+            <StackPane>
+               <children>
+                  <PasswordField fx:id="passwordField" promptText="Create a password" />
+                  <TextField fx:id="passwordTextField" promptText="Create a password" visible="false" managed="false" />
+               </children>
+            </StackPane>
+            <CheckBox fx:id="showPasswordCheckBox" style="-fx-text-fill: #ffffff;" text="Show Password" />
             <ProgressBar fx:id="passwordStrengthBar" prefWidth="200.0" progress="0.0" />
             <Label fx:id="passwordStrengthLabel" />
          </children>
