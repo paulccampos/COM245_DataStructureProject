@@ -112,7 +112,7 @@ public class MediaPlayerService {
         isPlaying = false;
         pausedTime += System.currentTimeMillis() - playbackStartTime;
         System.out.println("Paused");
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             mediaPlayer.pause();
         }
         notifyMediaPlayerHandler();
@@ -123,7 +123,7 @@ public class MediaPlayerService {
             isPlaying = true;
             playbackStartTime = System.currentTimeMillis();
             System.out.println("Resumed: " + currentSong.getTitle());
-            if (mediaPlayer != null) {
+            if (mediaPlayer != null && (mediaPlayer.getStatus() == MediaPlayer.Status.READY || mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED)) {
                 mediaPlayer.play();
             }
             notifyMediaPlayerHandler();
@@ -200,6 +200,20 @@ public class MediaPlayerService {
         queue.clear();
         mongoService.clearQueue();
         System.out.println("Queue cleared");
+        notifyMediaPlayerHandler();
+    }
+
+    public void clearCurrentSong() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+            mediaPlayer = null;
+        }
+        currentSong = null;
+        isPlaying = false;
+        playbackStartTime = 0;
+        pausedTime = 0;
+        System.out.println("Current song cleared");
         notifyMediaPlayerHandler();
     }
 

@@ -1,24 +1,13 @@
 /* Library CSS - Adapted from HTML dark blue theme */
 
-:root {
-    -dark-blue: #0A111F;
-    -side-nav-blue: #052659;
-    -text-color: #ffffff;
-    -light-text: #ffffff;
-    -accent-green: #ffffff;
-    -search-bg: #252577;
-    -hover-bg: #283750;
-    -header-bg: #152033;
-}
-
 .main-content {
     -fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);
-    -fx-text-fill: -text-color;
+    -fx-text-fill: #ffffff;
     -fx-padding: 20px;
 }
 
 .main-content .label {
-    -fx-text-fill: -text-color;
+    -fx-text-fill: #ffffff;
 }
 
 .main-content .label:first-child {
@@ -28,26 +17,26 @@
 
 .button {
     -fx-background-color: #739EC9;
-    -fx-text-fill: -text-color;
+    -fx-text-fill: #ffffff;
     -fx-padding: 8px 15px;
     -fx-border-radius: 4px;
 }
 
 .button:hover {
-    -fx-background-color: -hover-bg;
+    -fx-background-color: #283750;
 }
 
 .text-field {
-    -fx-background-color: -search-bg;
-    -fx-text-fill: -text-color;
-    -fx-prompt-text-fill: -light-text;
+    -fx-background-color: #252577;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff;
     -fx-border-radius: 4px;
     -fx-padding: 8px;
 }
 
 .combo-box {
-    -fx-background-color: -search-bg;
-    -fx-text-fill: -text-color;
+    -fx-background-color: #252577;
+    -fx-text-fill: #ffffff;
     -fx-border-radius: 4px;
 }
 

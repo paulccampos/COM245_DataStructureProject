@@ -167,7 +167,7 @@ public class homecontroller {
         }
 
         Label label = new Label(playlist.getString("title"));
-        label.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: -spawtify-text-color;");
+        label.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: -fx-spawtify-text-color;");
 
         box.getChildren().addAll(grid, label);
 
@@ -205,10 +205,10 @@ public class homecontroller {
         }
 
         Label titleLabel = new Label(song.getString("title"));
-        titleLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: -spawtify-text-color;");
+        titleLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: -fx-spawtify-text-color;");
 
         Label artistLabel = new Label(song.getString("artist"));
-        artistLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: -spawtify-subtle-text-color;");
+        artistLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: -fx-spawtify-subtle-text-color;");
 
         box.getChildren().addAll(iv, titleLabel, artistLabel);
 

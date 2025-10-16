@@ -46,7 +46,7 @@
         "party",
         "energetic"
       ],
-      "file": "../../mp3/Nonstop.mp3",
+      "file": "/mp3/Nonstop.mp3",
       "imagePath": "/Albums/Scorpion.jpg",
       "globalPlayCount": 4,
       "userPlayCounts": {
@@ -71,7 +71,7 @@
         "reflective",
         "chill"
       ],
-      "file": "../../mp3/LookWhatYouveDone.mp3",
+      "file": "/mp3/LookWhatYouveDone.mp3",
       "imagePath": "/Albums/TakeCare.jpg",
       "globalPlayCount": 9,
       "userPlayCounts": {
@@ -97,7 +97,7 @@
         "party",
         "fun"
       ],
-      "file": "../../mp3/InMyFeelings.mp3",
+      "file": "/mp3/InMyFeelings.mp3",
       "imagePath": "/Albums/Scorpion.jpg",
       "globalPlayCount": 8,
       "userPlayCounts": {
@@ -122,7 +122,7 @@
         "romantic",
         "chill"
       ],
-      "file": "../../mp3/HoldOnWereGoingHome.mp3",
+      "file": "/mp3/HoldOnWereGoingHome.mp3",
       "imagePath": "/Albums/NothingWastheSame.jpeg",
       "globalPlayCount": 8,
       "userPlayCounts": {
@@ -158,7 +158,7 @@
         "romantic",
         "happy"
       ],
-      "file": "../../mp3/Tingin.mp3",
+      "file": "/mp3/Tingin.mp3",
       "imagePath": "/Albums/Tingin.jpg",
       "globalPlayCount": 1,
       "userPlayCounts": {
@@ -183,7 +183,7 @@
         "sad",
         "melancholy"
       ],
-      "file": "../../mp3/SaksiAngLangit.mp3",
+      "file": "/mp3/SaksiAngLangit.mp3",
       "imagePath": "/Albums/SaksiAngLangit.jpeg",
       "globalPlayCount": 1,
       "userPlayCounts": {
@@ -209,7 +209,7 @@
         "sad",
         "emotional"
       ],
-      "file": "../../mp3/Multo.mp3",
+      "file": "/mp3/Multo.mp3",
       "imagePath": "/Albums/Multo.jpeg",
       "globalPlayCount": 1,
       "userPlayCounts": {
@@ -235,7 +235,7 @@
         "happy",
         "cheerful"
       ],
-      "file": "../../mp3/KahelNaLangit.mp3",
+      "file": "/mp3/KahelNaLangit.mp3",
       "imagePath": "/Albums/KahelNaLangit.jpg",
       "globalPlayCount": 1,
       "userPlayCounts": {

@@ -1,8 +1,11 @@
-# TODO: Make main.fxml like Spotify
+# TODO: Prevent song from playing on app open
 
-- [x] Add a top bar to the BorderPane with a search field and user profile section.
-- [x] Enhance the left sidebar to include a "Your Playlists" section with placeholder playlists.
-- [x] Test the layout changes (if applicable).
-- [x] Change the design of the progress bar.
-- [x] Change the design of the queue button.
-- [x] Replace the photo in the left side of the title (song image).
+## Overview
+
+Ensure that no song plays automatically when the application opens, even if there was a previous session.
+
+## Steps
+
+- [x] Add clearCurrentSong() method in MediaPlayerService to stop and clear any current song.
+- [x] Call clearCurrentSong() in MainController.initialize() to prevent auto-play on app start.
+- [ ] Test the application to ensure no song plays on open.
