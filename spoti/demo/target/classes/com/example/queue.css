@@ -19,7 +19,7 @@
 }
 
 .main-content .label {
-    -fx-text-fill: -text-color;
+    -fx-text-fill: white;
 }
 
 .main-content .label:first-child {

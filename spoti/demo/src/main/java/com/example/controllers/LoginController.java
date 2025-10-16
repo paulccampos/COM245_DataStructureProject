@@ -74,6 +74,11 @@ public class LoginController implements Initializable {
                 navigateToHome(user);
             }
         } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login Failed");
+            alert.setHeaderText("Invalid Credentials");
+            alert.setContentText("The username or password you entered is incorrect. Please try again.");
+            alert.showAndWait();
         }
     }
 

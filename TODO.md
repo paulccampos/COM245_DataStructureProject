@@ -1,10 +1,8 @@
-# TODO: Add Show/Hide Password Checkboxes
+# TODO List for Task
 
-## Tasks
-- [x] Update login.fxml to add CheckBox for password visibility
-- [x] Update signup.fxml to add CheckBox for password field only (not confirm)
-- [x] Update userprofile.fxml to add CheckBox for new password field and add strength bar/label
-- [x] Update LoginController.java to handle checkbox toggle for password field
-- [x] Update SignUpController.java to handle checkbox toggle for password field
-- [x] Update ProfileController.java to handle checkbox toggle for new password field and implement strength logic
-- [ ] Test the functionality in login, signup, and profile screens
+## Queue Text Color Changes
+- [x] Update queue.css to set label text color to white
+- [x] Fix inline style in queue.fxml for the "Queue" label
+
+## Login Error Handling
+- [x] Add error alert in LoginController.java for wrong password/username

@@ -12,7 +12,7 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <Label fx:id="currentSongLabel" style="-fx-font-size: 40px; -fx-font-weight: bold;" text="Queue" />
+      <Label fx:id="currentSongLabel" style="-fx-font-size: 40px; -fx-text-fill: #ffffff; -fx-font-weight: bold;" text="Queue" />
       <HBox alignment="CENTER_LEFT" spacing="20.0">
          <children>
             <javafx.scene.layout.Region HBox.hgrow="ALWAYS" />
