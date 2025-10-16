@@ -1,8 +1,11 @@
-# TODO List for Task
+# TODO: Prevent song from playing on app open
 
-## Queue Text Color Changes
-- [x] Update queue.css to set label text color to white
-- [x] Fix inline style in queue.fxml for the "Queue" label
+## Overview
 
-## Login Error Handling
-- [x] Add error alert in LoginController.java for wrong password/username
+Ensure that no song plays automatically when the application opens, even if there was a previous session.
+
+## Steps
+
+- [x] Add clearCurrentSong() method in MediaPlayerService to stop and clear any current song.
+- [x] Call clearCurrentSong() in MainController.initialize() to prevent auto-play on app start.
+- [ ] Test the application to ensure no song plays on open.

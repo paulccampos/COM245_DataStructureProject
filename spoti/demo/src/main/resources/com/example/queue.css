@@ -1,25 +1,25 @@
 /* Queue CSS - Adapted from HTML dark blue theme */
 
 :root {
-    -dark-blue: #0A111F;
-    -side-nav-blue: #052659;
-    -text-color: #cbd9ed;
-    -light-text: #cbd9ed;
-    -accent-green: #cbd9ed;
-    -search-bg: #252577;
-    -hover-bg: #283750;
-    -header-bg: #152033;
+    -fx-dark-blue: #0A111F;
+    -fx-side-nav-blue: #052659;
+    -fx-text-color: #cbd9ed;
+    -fx-light-text: #cbd9ed;
+    -fx-accent-green: #cbd9ed;
+    -fx-search-bg: #252577;
+    -fx-hover-bg: #283750;
+    -fx-header-bg: #152033;
 }
 
 .main-content {
     -fx-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%);
-    -fx-text-fill: -text-color;
+    -fx-text-fill: #cbd9ed;
     -fx-padding: 20px;
     -fx-spacing: 20px;
 }
 
 .main-content .label {
-    -fx-text-fill: white;
+    -fx-text-fill: #cbd9ed;
 }
 
 .main-content .label:first-child {
@@ -29,13 +29,13 @@
 
 .button {
     -fx-background-color: #739EC9;
-    -fx-text-fill: -text-color;
+    -fx-text-fill: #cbd9ed;
     -fx-padding: 8px 15px;
     -fx-border-radius: 4px;
 }
 
 .button:hover {
-    -fx-background-color: -hover-bg;
+    -fx-background-color: #283750;
 }
 
 .hbox {

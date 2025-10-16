@@ -31,7 +31,7 @@
          <children>
             <HBox prefHeight="68.0" prefWidth="192.0" styleClass="song-info">
                <children>
-                  <VBox prefHeight="60.0" prefWidth="60.0" styleClass="song-cover-placeholder" />
+                  <ImageView fx:id="currentSongImage" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" styleClass="spotify-song-image" />
                   <VBox styleClass="song-details">
                      <children>
                         <Label fx:id="currentSongLabel" style="-fx-font-weight: bold;" text="Song Title" />
@@ -40,7 +40,6 @@
                   </VBox>
                </children>
             </HBox>
-            <ImageView fx:id="currentSongImage" fitHeight="67.0" fitWidth="72.0" preserveRatio="true" />
             <VBox alignment="CENTER" styleClass="center-player" HBox.hgrow="ALWAYS">
                <children>
                   <HBox spacing="20.0" styleClass="player-controls">
@@ -53,7 +52,7 @@
                   <HBox alignment="CENTER" maxWidth="500.0" spacing="10.0" styleClass="progress-bar-container">
                      <children>
                         <Label fx:id="currentTimeLabel" text="0:00" />
-                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" styleClass="spotify-progress-bar" />
                         <Label fx:id="durationLabel" text="00:00" />
                      </children>
                   </HBox>
@@ -61,7 +60,7 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefWidth="150.0" spacing="15.0" styleClass="volume-controls">
                <children>
-                  <Button onAction="#onViewQueue" styleClass="media-button" text="Queue" />
+                  <Button onAction="#onViewQueue" styleClass="spotify-queue-button" text="Queue" />
                </children>
             </HBox>
          </children>

@@ -87,7 +87,7 @@ public class AdminController implements Initializable {
 
         // Add header
         javafx.scene.layout.HBox headerBox = new javafx.scene.layout.HBox(10);
-        headerBox.setStyle("-fx-padding: 5; -fx-border-color: -spawtify-subtle-text-color; -fx-border-width: 0 0 1 0;");
+        headerBox.setStyle("-fx-padding: 5; -fx-border-color: -fx-spawtify-subtle-text-color; -fx-border-width: 0 0 1 0;");
         Label userHeader = new Label("Username");
         userHeader.setPrefWidth(150);
         userHeader.setStyle("-fx-text-fill: #ffffff;");

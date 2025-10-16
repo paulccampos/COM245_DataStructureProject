@@ -216,7 +216,7 @@ public class playlistcontroller {
         int totalMinutes = totalDurationSeconds / 60;
         int totalSeconds = totalDurationSeconds % 60;
         Label totalDurationLabel = new Label("Total Playlist Duration: " + totalMinutes + ":" + String.format("%02d", totalSeconds));
-        totalDurationLabel.setStyle("-fx-font-weight: bold; -fx-padding: 5 0 5 0; -fx-text-fill: -spawtify-subtle-text-color;");
+        totalDurationLabel.setStyle("-fx-font-weight: bold; -fx-padding: 5 0 5 0; -fx-text-fill: -fx-spawtify-subtle-text-color;");
         songsVBox.getChildren().add(totalDurationLabel);
 
         HBox headerBox = new HBox(20);

@@ -1,20 +1,20 @@
 /* --- Color Palette and General - Adapted from HTML dark blue theme --- */
 .root {
-    -spawtify-primary-color: #cbd9ed; /* Light blue text */
-    -spawtify-secondary-color: #052659; /* Dark blue for accents/hover */
-    -spawtify-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%); /* Gradient background */
-    -spawtify-sidebar-background: #052659; /* Side nav blue */
-    -spawtify-media-player-background: #052659; /* Dark blue for media player */
-    -spawtify-text-color: #ffffff; /* White text for dark backgrounds */
-    -spawtify-subtle-text-color: #ffffff; /* White subtle text */
-    -spawtify-border-color: #3660a8; /* Border color */
-    -fx-background-color: -spawtify-background-color;
+    -fx-spawtify-primary-color: #cbd9ed; /* Light blue text */
+    -fx-spawtify-secondary-color: #052659; /* Dark blue for accents/hover */
+    -fx-spawtify-background-color: linear-gradient(to bottom, #0b52bf 23%, #094197 33%, #073274 61%, #052659 86%); /* Gradient background */
+    -fx-spawtify-sidebar-background: #052659; /* Side nav blue */
+    -fx-spawtify-media-player-background: #052659; /* Dark blue for media player */
+    -fx-spawtify-text-color: #ffffff; /* White text for dark backgrounds */
+    -fx-spawtify-subtle-text-color: #ffffff; /* White subtle text */
+    -fx-spawtify-border-color: #3660a8; /* Border color */
+    -fx-background-color: -fx-spawtify-background-color;
     -fx-font-family: "Arial";
 }
 
 /* --- Sidebar --- */
 .sidebar {
-    -fx-background-color: -spawtify-sidebar-background;
+    -fx-background-color: -fx-spawtify-sidebar-background;
     -fx-padding: 20px 10px;
     -fx-spacing: 15px;
 }
@@ -22,7 +22,7 @@
 .logo {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: -spawtify-secondary-color;
+    -fx-text-fill: -fx-spawtify-secondary-color;
     -fx-padding: 0 0 10px 10px;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .main-nav .hyperlink {
-    -fx-text-fill: -spawtify-text-color;
+    -fx-text-fill: -fx-spawtify-text-color;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-padding: 8px 12px;
@@ -41,7 +41,7 @@
 }
 
 .main-nav .hyperlink:hover {
-    -fx-text-fill: -spawtify-primary-color;
+    -fx-text-fill: -fx-spawtify-primary-color;
     -fx-underline: false;
 }
 
@@ -56,28 +56,28 @@
 }
 
 .playlists-header .label {
-    -fx-text-fill: -spawtify-subtle-text-color;
+    -fx-text-fill: -fx-spawtify-subtle-text-color;
     -fx-font-weight: bold;
 }
 
 .playlists .hyperlink {
-    -fx-text-fill: -spawtify-subtle-text-color;
+    -fx-text-fill: -fx-spawtify-subtle-text-color;
     -fx-underline: false;
 }
 
 .playlists .hyperlink:hover {
-    -fx-text-fill: -spawtify-primary-color;
+    -fx-text-fill: -fx-spawtify-primary-color;
     -fx-underline: false;
 }
 
 /* --- Main Content Area --- */
 .main-content {
-    -fx-background-color: -spawtify-background-color;
+    -fx-background-color: -fx-spawtify-background-color;
     -fx-padding: 20px;
 }
 
 .main-content .label {
-    -fx-text-fill: -spawtify-text-color;
+    -fx-text-fill: -fx-spawtify-text-color;
 }
 
 .greeting .label {
@@ -92,16 +92,16 @@
 
 /* --- Media Player Bar --- */
 .now-playing-bar {
-    -fx-background-color: -spawtify-media-player-background;
+    -fx-background-color: -fx-spawtify-media-player-background;
     -fx-padding: 10px 20px;
     -fx-alignment: center;
     -fx-spacing: 20px;
-    -fx-border-color: -spawtify-border-color transparent transparent transparent;
+    -fx-border-color: -fx-spawtify-border-color transparent transparent transparent;
     -fx-border-width: 1px;
 }
 
 .song-details .label {
-    -fx-text-fill: -spawtify-text-color; /* White text */
+    -fx-text-fill: -fx-spawtify-text-color; /* White text */
 }
 
 .player-controls {
@@ -110,16 +110,16 @@
 
 .player-controls .button, .volume-controls .button {
     -fx-background-color: transparent;
-    -fx-text-fill: -spawtify-text-color; /* White text */
+    -fx-text-fill: -fx-spawtify-text-color; /* White text */
     -fx-font-size: 18px;
 }
 
 .player-controls .button:hover, .volume-controls .button:hover {
-    -fx-text-fill: -spawtify-primary-color; /* Blue on hover */
+    -fx-text-fill: -fx-spawtify-primary-color; /* Blue on hover */
 }
 
 .progress-bar-container .label {
-    -fx-text-fill: -spawtify-text-color; /* White text */
+    -fx-text-fill: -fx-spawtify-text-color; /* White text */
 }
 
 /* --- Playlist Buttons --- */
@@ -153,25 +153,25 @@
 
 /* --- Admin Panel --- */
 .admin-panel {
-    -fx-background-color: -spawtify-background-color;
+    -fx-background-color: -fx-spawtify-background-color;
 }
 
 .admin-sidebar {
-    -fx-background-color: -spawtify-sidebar-background;
-    -fx-border-color: -spawtify-border-color;
+    -fx-background-color: -fx-spawtify-sidebar-background;
+    -fx-border-color: -fx-spawtify-border-color;
     -fx-border-width: 1px;
 }
 
 .admin-header {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: -spawtify-text-color;
+    -fx-text-fill: -fx-spawtify-text-color;
 }
 
 .admin-subheader {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: -spawtify-text-color;
+    -fx-text-fill: -fx-spawtify-text-color;
 }
 
 .delete-button {

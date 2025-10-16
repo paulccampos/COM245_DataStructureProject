@@ -73,6 +73,9 @@ public class MainController {
         this.mediaPlayerService = App.getMediaPlayerServiceStatic();
         this.mongoService = App.getMongoServiceStatic();
 
+        // Clear any current song to prevent auto-play on app open
+        mediaPlayerService.clearCurrentSong();
+
         // Register UI components with MediaPlayerHandler
         MediaPlayerHandler.getInstance().registerUIComponents(
             mediaPlayerBar, currentSongLabel, currentArtistLabel, currentTimeLabel, durationLabel, progressBar,
