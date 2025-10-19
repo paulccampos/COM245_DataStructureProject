@@ -88,6 +88,15 @@ public class Queue {
         return null;
     }
 
+    public void moveSong(int fromIndex, int toIndex) {
+        if (fromIndex >= 0 && fromIndex < songs.size() && toIndex >= 0 && toIndex <= songs.size()) {
+            Song song = songs.remove(fromIndex);
+            Type type = types.remove(fromIndex);
+            songs.add(toIndex, song);
+            types.add(toIndex, type);
+        }
+    }
+
     public void clear() {
         songs.clear();
         types.clear();

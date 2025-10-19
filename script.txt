@@ -1,0 +1,93 @@
+**Presentation Script: Data Structures, Algorithm Design, and Implementation in Our Java Music Streaming Application**
+
+[Opening Remarks]
+Good [morning/afternoon], esteemed panel members. My name is [Your Name], and today I am excited to present our COM245 Data Structures project: a comprehensive Java-based music streaming application. This project demonstrates the practical application of data structures, algorithm design, and implementation in a real-world context. Based on our detailed program flow document, I will walk you through the key topics, highlighting how we selected and utilized data structures, designed algorithms for efficiency, and implemented them to create a functional, user-friendly application. Let's dive in.
+
+[Section 1: Data Structures Used]
+First, let's discuss the data structures we employed, chosen 
+specifically for their suitability to the application's needs.
+
+Our primary data structure is the **Queue**, implemented for 
+managing the playback queue. This FIFO (First-In-First-Out) 
+structure ensures songs are played in the order they are added, 
+with priority given to manual user additions over auto-generated 
+recommendations. We prioritized manual songs by inserting them after 
+existing manual ones, while auto songs are appended and sorted 
+by global play count. This choice over a Stack (which would be 
+LIFO and unsuitable for sequential playback) or a Priority Queue 
+(which lacks the simple rule-based prioritization we needed) makes 
+the Queue ideal for maintaining playback order without unnecessary 
+complexity.
+
+Extensively used is the **List/ArrayList**, serving as a dynamic array for collections like songs, playlists, and users. Its flexibility allows for easy insertions, deletions, and access by index, making it perfect for UI lists and dynamic updates. For instance, in the songs view, we filter songs by genre by removing non-matching items from the list, enabling real-time UI responsiveness. We avoided Sets for collections where order and duplicates matter, opting for List's versatility.
+
+Additionally, we incorporated a **HashSet** in recommendation generation to ensure uniqueness. By tracking added song titles, we prevent duplicates in auto-suggestions, leveraging HashSet's fast lookups for efficiency. This was crucial for maintaining a diverse and non-repetitive queue.
+
+In summary, our data structure choices—Queue for order, List for flexibility, and HashSet for uniqueness—were driven by the application's core requirements: sequential playback, dynamic collections, and deduplication, ensuring optimal performance and user experience.
+
+[Section 2: Algorithm Design]
+Moving to algorithm design, we focused on efficiency, correctness, and integration with our data structures, designing algorithms that handle sorting, insertion, and other operations seamlessly.
+
+A key algorithm is our custom **Quicksort** for sorting songs alphabetically by title or artist in the songs view. With an average time complexity of O(n log n), it partitions the list around a pivot, recursively sorting sublists. This was chosen over built-in sorts for educational value and to demonstrate algorithmic proficiency, ensuring fast sorting even for larger song libraries.
+
+For queue insertions, we designed a priority-based insertion logic in the Queue class. Manual songs are inserted after the last manual song for priority, while auto songs are added at the end and sorted by play count using a simple bubble sort. This bubble sort, though O(n^2), is sufficient for small queue sizes, prioritizing simplicity and correctness over advanced sorting for auto-songs.
+
+Recommendation generation follows a rule-based algorithm: prioritizing songs by matching artist, genre, and vibe, then genre and vibe, using HashSet for uniqueness and sorting by ascending play count. This ensures personalized, non-repetitive suggestions, triggered when the queue empties.
+
+Other designs include filtering (removing non-matching elements from lists) and search (querying MongoDB for matches), all integrated with UI updates for a smooth experience. Our pseudocode outlines these flows, from app launch to logout, emphasizing modularity and efficiency.
+
+To illustrate our algorithm designs, let's explain key parts of the pseudocode, covering the main components of our application:
+
+1. **Program Launch**: Call launch(args) to start the JavaFX application lifecycle. This initializes the JavaFX framework for UI management.
+
+2. **App Initialization**: Create a new Scene with login.fxml loaded as the root. Apply global CSS (styles.css) to the scene and show the primary stage (window). This sets up the initial UI as the login screen.
+
+3. **Service Initialization**: If mongoService is null, instantiate MongoService() to connect to MongoDB (loading data from JSON files). Instantiate MediaPlayerService(mongoService) for audio playback and UserService(mongoService) for user management. This ensures backend services are ready with database access.
+
+4. **Main Application Loop**: Load the main view (main.fxml) after login. User navigates to sub-views like Home, Library, Search, Songs, Playlists, Profile, and Admin. Auto-suggestions trigger when the queue is empty, recommending songs based on artist, genre, and vibe, sorted by play count. Shuffle mode clears the queue, shuffles playlist songs, plays the first, and adds the rest as auto.
+
+5. **Song Management and Operations**: Load songs from MongoDB via MongoService.getAllSongs(). Filter by genre by removing non-matching items from the list. Sort using quicksort: partition around a pivot, recursively sort sublists. Add to playlist: check duplicates via MongoService.isSongInPlaylist(), insert via MongoService.addSongToPlaylist(). Add to queue: create Song model, add via MediaPlayerService.addManualToQueue(). Play song: play via MediaPlayerService.playSong(), update UI via MediaPlayerHandler.
+
+6. **Playlist Operations**: Load playlist songs via MongoService. Add/remove songs: insert/remove from playlist, update JSON. Create/delete playlists via librarycontroller.java or admin panel. Shuffle: clear queue, shuffle songs, play first, add rest as auto.
+
+7. **Media Playback Operations**: Play song: load MP3, start playback. Add to queue: insert into queue list. Clear queue: empty list. Next/Previous/Toggle: navigate queue, control state. Update UI: MediaPlayerHandler refreshes now-playing, progress bar. Update play counts in DB.
+
+8. **Search Operations**: User enters query, query MongoDB for matching songs (by title, artist, album). Display results similarly to songs view.
+
+9. **Library Operations**: Display user's playlists, favorites, recently played. Allow creation of new playlists, adding songs.
+
+10. **Admin Operations**: View/manage users and songs. Add/edit/delete songs/playlists in DB.
+
+11. **Profile Operations**: Update user details (name, password) via UserService.updateProfile().
+
+12. **Data Persistence**: All CRUD: Insert (new user, song to playlist), Update (play counts), Delete (remove from playlist), Query (fetch lists). Uses JSON files for storage.
+
+13. **Logout Flow**: Pause media, clear queue, clear current user, delete local credentials file, switch to login screen.
+
+14. **Shutdown**: JavaFX handles cleanup; DB persists via MongoService.
+
+These pseudocode explanations highlight how our algorithms integrate data structures for efficient, user-centric operations.
+
+[Section 3: Implementation]
+Now, let's explore the implementation, where we brought these designs to life in Java, using JavaFX for the UI and custom services for backend logic.
+
+In **songscontroller.java**, quicksort is implemented recursively, swapping elements based on string comparisons. This sorts the song list in-place, updating the UI instantly. For insertions, MediaPlayerService adds songs to the queue, updating the database via MongoService and notifying the UI handler.
+
+The Queue class handles insertions with index-based logic: finding the last manual song and inserting after it, then sorting auto songs with bubble sort. This ensures priority without a full priority queue.
+
+Recommendations in MediaPlayerService use loops to match criteria, employing HashSet to avoid duplicates, and sort the list before adding to the queue. This auto-suggestion runs in the background, maintaining continuous playback.
+
+UI implementations leverage JavaFX: controllers load FXML, handle events, and call services. For example, homecontroller.java queries MongoDB for top songs and recommendations, rendering them as VBox elements. Password strength validation in SignUpController.java calculates scores with regex checks, providing real-time feedback.
+
+Backend-wise, MongoService performs CRUD on JSON files, simulating MongoDB. MediaPlayerService manages playback, integrating with MediaPlayerHandler for UI updates.
+
+These implementations demonstrate clean separation: controllers for UI, services for logic, and models for data, resulting in a robust, maintainable application.
+
+[Closing Remarks]
+In conclusion, our project successfully integrates data structures, algorithm design, and implementation to deliver a fully functional music streaming app. The Queue, List, and HashSet support core features, while quicksort, priority insertions, and recommendations ensure efficiency and personalization. Through rigorous testing, we confirmed reliability, with sorting and insertions performing flawlessly.
+
+This endeavor has taught us valuable lessons in balancing theory and practice, from selecting data structures to optimizing algorithms. We believe this project showcases our understanding of data structures and algorithms in a practical, impactful way.
+
+Thank you for your time. I am happy to answer any questions.
+
+[End of Script]

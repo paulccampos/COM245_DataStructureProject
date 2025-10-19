@@ -141,16 +141,18 @@ public class playlistcontroller {
             loadTopSongs();
 
             ContextMenu contextMenu = new ContextMenu();
-            if (isCreator && !createdBy.equals("admin")) {  // Hide delete for admin-created playlists
+            if (isCreator || App.isAdminUser()) {
                 MenuItem deleteItem = new MenuItem("Delete Playlist");
                 deleteItem.setOnAction(e -> onDeletePlaylist());
                 contextMenu.getItems().add(deleteItem);
-                MenuItem editNameItem = new MenuItem("Edit name");
-                editNameItem.setOnAction(e -> onEditPlaylistName());
-                contextMenu.getItems().add(editNameItem);
-                MenuItem editDescItem = new MenuItem("Edit description");
-                editDescItem.setOnAction(e -> onEditPlaylistDescription());
-                contextMenu.getItems().add(editDescItem);
+                if (isCreator) {
+                    MenuItem editNameItem = new MenuItem("Edit name");
+                    editNameItem.setOnAction(e -> onEditPlaylistName());
+                    contextMenu.getItems().add(editNameItem);
+                    MenuItem editDescItem = new MenuItem("Edit description");
+                    editDescItem.setOnAction(e -> onEditPlaylistDescription());
+                    contextMenu.getItems().add(editDescItem);
+                }
             } else {
                 if (isLiked) {
                     MenuItem removeItem = new MenuItem("Remove from Library");
@@ -216,7 +218,7 @@ public class playlistcontroller {
         int totalMinutes = totalDurationSeconds / 60;
         int totalSeconds = totalDurationSeconds % 60;
         Label totalDurationLabel = new Label("Total Playlist Duration: " + totalMinutes + ":" + String.format("%02d", totalSeconds));
-        totalDurationLabel.setStyle("-fx-font-weight: bold; -fx-padding: 5 0 5 0; -fx-text-fill: -fx-spawtify-subtle-text-color;");
+        totalDurationLabel.setStyle("-fx-font-weight: bold; -fx-padding: 5 0 5 0; -fx-text-fill: -spawtify-subtle-text-color;");
         songsVBox.getChildren().add(totalDurationLabel);
 
         HBox headerBox = new HBox(20);
@@ -238,16 +240,6 @@ public class playlistcontroller {
             String title = song.getString("title");
             String artist = song.getString("artist");
             String album = song.getString("album");
-            Object durationObj = song.get("duration");
-            String duration;
-            if (durationObj instanceof String) {
-                duration = (String) durationObj;
-            } else if (durationObj instanceof Integer) {
-                int durInt = (Integer) durationObj;
-                duration = String.format("%d:%02d", durInt / 60, durInt % 60);
-            } else {
-                duration = "3:45"; // Default duration
-            }
 
             HBox songBox = new HBox(20);
             songBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);

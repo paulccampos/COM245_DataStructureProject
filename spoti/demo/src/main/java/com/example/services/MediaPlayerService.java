@@ -218,22 +218,23 @@ public class MediaPlayerService {
     }
 
     public void removeSongFromQueue(Song song) {
-        queue.getSongs().remove(song);
-        mongoService.removeFromQueue(convertSongToDocument(song));
+        int index = queue.getSongs().indexOf(song);
+        if (index != -1) {
+            queue.removeSong(index);
+            mongoService.removeFromQueue(convertSongToDocument(song));
+        }
     }
 
     public void moveUp(int index) {
         if (index > 0 && index < queue.size()) {
-            Song song = queue.removeSong(index);
-            queue.getSongs().add(index - 1, song);
+            queue.moveSong(index, index - 1);
             notifyMediaPlayerHandler();
         }
     }
 
     public void moveDown(int index) {
         if (index >= 0 && index < queue.size() - 1) {
-            Song song = queue.removeSong(index);
-            queue.getSongs().add(index + 1, song);
+            queue.moveSong(index, index + 1);
             notifyMediaPlayerHandler();
         }
     }
